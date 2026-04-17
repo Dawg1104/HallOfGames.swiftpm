@@ -1,0 +1,14 @@
+//
+//  HomeScreen.swift
+//  HallOfGames
+//
+//  Created by Nikolay K. Danchev on 4/17/26.
+//
+
+import SwiftUI
+
+struct HomeScreen: View {
+    var body: some View {
+        Text("HomeScreen")
+    }
+}

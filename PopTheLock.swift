@@ -9,6 +9,8 @@ import SwiftUI
 
 struct PopTheLock: View {
     var body: some View {
-        Text("Pop The Lock")
+        ZStack {
+            Color.blue
+        }
     }
 }

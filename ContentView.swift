@@ -2,9 +2,17 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Text("Hall of Games")
-                .font(.largeTitle)
+        
+        Text("Hall of Games")
+            .font(.largeTitle)
+        
+        NavigationStack {
+            VStack {
+                
+                NavigationLink("Go to menu") {
+                    Menu()
+                }
+            }
         }
     }
 }

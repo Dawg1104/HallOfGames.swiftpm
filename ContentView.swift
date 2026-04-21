@@ -7,11 +7,16 @@ struct ContentView: View {
             .font(.largeTitle)
         
         NavigationStack {
+        ZStack {
+            Image("TheHall")
+                .resizable()
             VStack {
                 
                 NavigationLink("Go to menu") {
                     Menu()
                 }
+                Text("Hall of Games")
+                    .font(.largeTitle)
             }
         }
     }

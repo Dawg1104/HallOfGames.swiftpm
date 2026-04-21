@@ -9,11 +9,36 @@ import SwiftUI
 struct BlackJack: View {
     @State var playerScore = 0
     @State var computerScore = 0
+    @State var cardImage = ""
+    @State var number = 0
     var body: some View {
-        Text("computer score: \(computerScore)")
-            .font(.system(size: 30, weight: .heavy, design: .monospaced))
-        
-        
+        ZStack {
+            Image("card table")
+                .resizable()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            VStack {
+                Text("computer score: \(computerScore)")
+                    .font(.system(size: 30, weight: .heavy, design: .monospaced))
+                HStack {
+                    Image("deckOfCards")
+                        .resizable()
+                        .frame(width: 200, height: 200)
+                    Image(cardImage)
+                        .resizable()
+                        .frame(width: 200, height: 200)
+                }
+                Button {
+                    number = Int.random(in: 1...10)
+                    switch number {
+                    case 1: cardImage = ""
+                    default: cardImage = "AceOfHearts"
+                    }
+                } label: {
+                    Text("Hit")
+                }
+
+            }
+        }
     }
 }
 

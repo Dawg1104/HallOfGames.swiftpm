@@ -27,8 +27,13 @@ struct Menu: View {
             
             ScrollView {
                 VStack {
-                    ForEach(games.keys.count) { game in
-                        
+                    ForEach(Array(games.keys), id: \.self) { game in
+                        NavigationLink(destination: {
+                            EmptyView()
+                        }, label: {
+                            Text(game)
+                                .foregroundStyle(.white)
+                        })
                     }
                 }
             }

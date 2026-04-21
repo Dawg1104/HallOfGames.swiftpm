@@ -8,7 +8,16 @@
 import SwiftUI
 
 struct Menu: View {
-    let games = ["BlackJack","FiveNightsAtJobApplications","JumpyBird","Pong","PopTheLock","RNG","Roulette","War"]
+    var games: Dictionary<String, View> = [
+        "BlackJack": BlackJack(),
+        "FiveNightsAtJobApplications": EmptyView(),
+        "JumpyBird": EmptyView(),
+        "Pong": Pong(),
+        "PopTheLock": EmptyView(),
+        "RNG": EmptyView(),
+        "Roulette": EmptyView(),
+        "War": EmptyView(),
+    ]
     var body: some View {
         
         ZStack {
@@ -18,15 +27,7 @@ struct Menu: View {
             
             ScrollView {
                 VStack {
-                    ForEach(games, id: \.self) { games in
-                        NavigationLink(destination: BlackJack()) {
-                            Text(games)
-                                .foregroundStyle(Color.white)
-                                .padding()
-                                .frame(maxWidth: 200)
-                                .background(Color.gray.opacity(0.2))
-                                .clipShape(Capsule())
-                        }
+                    ForEach(games.keys.count) { game in
                         
                     }
                 }

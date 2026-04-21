@@ -7,8 +7,13 @@
 
 import SwiftUI
 struct BlackJack: View {
+    @State var playerScore = 0
+    @State var computerScore = 0
     var body: some View {
-        Text("Black Jack")
+        Text("computer score: \(computerScore)")
+            .font(.system(size: 30, weight: .heavy, design: .monospaced))
+        
+        
     }
 }
 

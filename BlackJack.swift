@@ -25,17 +25,30 @@ struct BlackJack: View {
                         .frame(width: 200, height: 200)
                     Image(cardImage)
                         .resizable()
-                        .frame(width: 200, height: 200)
+                        .frame(width: 100, height: 200)
                 }
                 Button {
                     number = Int.random(in: 1...10)
                     switch number {
-                    case 1: cardImage = ""
+                    case 1: cardImage = "AceOfHearts"
+                        number += 1
                     default: cardImage = "AceOfHearts"
+                        number += 1
                     }
                 } label: {
-                    Text("Hit")
+                    Image("BHIT")
+                        .resizable()
+                        .frame(width: 200, height: 125)
                 }
+                Button {
+                    
+                } label: {
+                    Image("BSTAND")
+                        .resizable()
+                        .frame(width: 200, height: 125)
+                       
+                }
+
 
             }
         }

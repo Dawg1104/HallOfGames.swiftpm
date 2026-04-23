@@ -7,6 +7,8 @@ struct ContentView: View {
             ZStack {
                 Image("TheHall")
                     .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
                 VStack {
                     
                     Text("Hall of Games")

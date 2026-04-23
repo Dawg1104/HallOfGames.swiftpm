@@ -6,12 +6,10 @@
 //
 
 import SwiftUI
-struct war: View {
+struct WarView: View {
     var body: some View {
         Text("War, the card game")
     }
 }
 
-#Preview {
-    war()
-}
+

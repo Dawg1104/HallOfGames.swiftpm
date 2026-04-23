@@ -29,7 +29,9 @@ struct Lock: View {
                 .padding(75)
             Capsule()
                 .frame(width: 20, height: 50)
+                .rotationEffect(calculateRotationEffect(time: time))
                 .offset(calculateOffsetEffect(time: time))
+                
                 
         }
         .onReceive(timer) { _ in
@@ -39,7 +41,8 @@ struct Lock: View {
 }
 
 func calculateRotationEffect(time: Double) -> Angle {
-    return Angle(radians: time * 2.0 * .pi + (.pi / 2))
+    let angle = time * 2.0 * .pi
+    return Angle(radians: angle + (.pi / 2))
 }
 
 func calculateOffsetEffect(time: Double) -> CGSize {

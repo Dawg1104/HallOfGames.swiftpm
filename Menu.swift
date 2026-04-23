@@ -13,6 +13,8 @@ struct Menu: View {
         ZStack {
             Image("TheHall")
                 .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
             
             
             ScrollView {
@@ -21,7 +23,7 @@ struct Menu: View {
                     NavigationLink(destination: BlackJack()) {
                         Text("Blackjack")
                             .padding()
-                            .frame(maxWidth: 150, maxHeight: 40)
+                            .frame(maxWidth: 150, maxHeight: 60)
                             .background(Color.orange)
                             .foregroundColor(.white)
                             .clipShape(Capsule())
@@ -30,7 +32,7 @@ struct Menu: View {
                     NavigationLink(destination: FNAJAView()) {
                         Text("FNAJA")
                             .padding()
-                            .frame(maxWidth: 150, maxHeight: 40)
+                            .frame(maxWidth: 150, maxHeight: 60)
                             .background(Color.orange)
                             .foregroundColor(.white)
                             .clipShape(Capsule())
@@ -39,7 +41,7 @@ struct Menu: View {
                     NavigationLink(destination: JumpyBird()) {
                         Text("JumpyBird")
                             .padding()
-                            .frame(maxWidth: 150, maxHeight: 40)
+                            .frame(maxWidth: 150, maxHeight: 60)
                             .background(Color.orange)
                             .foregroundColor(.white)
                             .clipShape(Capsule())
@@ -48,7 +50,7 @@ struct Menu: View {
                     NavigationLink(destination: Pong()) {
                         Text("Pong")
                             .padding()
-                            .frame(maxWidth: 150, maxHeight: 40)
+                            .frame(maxWidth: 150, maxHeight: 60)
                             .background(Color.orange)
                             .foregroundColor(.white)
                             .clipShape(Capsule())
@@ -57,7 +59,7 @@ struct Menu: View {
                     NavigationLink(destination: PopTheLock()) {
                         Text("PopTheLock")
                             .padding()
-                            .frame(maxWidth: 150, maxHeight: 40)
+                            .frame(maxWidth: 150, maxHeight: 60)
                             .background(Color.orange)
                             .foregroundColor(.white)
                             .clipShape(Capsule())
@@ -66,7 +68,7 @@ struct Menu: View {
                     NavigationLink(destination: RNGView()) {
                         Text("RNG")
                             .padding()
-                            .frame(maxWidth: 150, maxHeight: 40)
+                            .frame(maxWidth: 150, maxHeight: 60)
                             .background(Color.orange)
                             .foregroundColor(.white)
                             .clipShape(Capsule())
@@ -75,7 +77,7 @@ struct Menu: View {
                     NavigationLink(destination: RouletteView()) {
                         Text("Roulette")
                             .padding()
-                            .frame(maxWidth: 150, maxHeight: 40)
+                            .frame(maxWidth: 150, maxHeight: 60)
                             .background(Color.orange)
                             .foregroundColor(.white)
                             .clipShape(Capsule())
@@ -84,7 +86,7 @@ struct Menu: View {
                     NavigationLink(destination: WarView()) {
                         Text("War")
                             .padding()
-                            .frame(maxWidth: 150, maxHeight: 40)
+                            .frame(maxWidth: 150, maxHeight: 60)
                             .background(Color.orange)
                             .foregroundColor(.white)
                             .clipShape(Capsule())

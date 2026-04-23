@@ -12,5 +12,3 @@ struct JumpyBird: View {
         Text("JumpyBird")
     }
 }
-
-

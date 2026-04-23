@@ -18,8 +18,8 @@ struct RouletteView: View {
     var body: some View {
         
         NavigationStack {
-        ZStack {
-            
+            ZStack {
+                
                 
                 
                 
@@ -124,93 +124,93 @@ struct RouletteView: View {
                         Text("You are ULTRA lucky")
                             .font(.largeTitle)
                             .foregroundColor(.red)
-                                                } else if totalMoney >= 1000000 && totalMoney < 1000000000 {
-                                                    Text("YOU HAVE INFINITE LUCK")
-                                                        .font(.title3)
-                                                        .foregroundColor(.blue)
-                                                } else if totalMoney >= 1000000000 && totalMoney < 100000000000 {
-                                                    Text("TOP 1 LUCK")
-                                                        .font(.title3)
-                                                        .foregroundColor(.green)
-                                                    Image("What was he cooking")
-                                                        .resizable()
-                                                } else if totalMoney >= 100000000000 && totalMoney < 1000000000000 {
-                                                    Text("You have reached the penultimate amount")
-                                                        .font(.title3)
-                                                        .foregroundStyle(.black)
-                                                    Image("Gem")
-                                                        .resizable()
-                                                } else if totalMoney >= 1000000000000 {
-                                                    NavigationLink(destination: GgsView()) {
-                                                        Text("Ggs")
-                                                    }
-                                                    
-                                                } else if totalMoney < numberofmoneygambled {
-                                                    Text("No you don't. I am God. Click this, It is your last Chance")
-                                                        .font(.title)
-                                                        .foregroundColor(.yellow)
-                                                    
-                                                    
-                                                    Button(action: {
-                                                        
-                                                        fatalError("Damn cheater")
-                                                        
-                                                    }, label: {
-                                                        
-                                                        Image("Anti-cheater")
-                                                            .resizable()
-                                                            .frame(maxWidth: .infinity,maxHeight: .infinity)
-                                                            .foregroundColor(.red)
-                                                        
-                                                    })
-                                                    
-                                                }
-                }
-                        
+                    } else if totalMoney >= 1000000 && totalMoney < 1000000000 {
+                        Text("YOU HAVE INFINITE LUCK")
+                            .font(.title3)
+                            .foregroundColor(.blue)
+                    } else if totalMoney >= 1000000000 && totalMoney < 100000000000 {
+                        Text("TOP 1 LUCK")
+                            .font(.title3)
+                            .foregroundColor(.green)
+                        Image("What was he cooking")
+                            .resizable()
+                    } else if totalMoney >= 100000000000 && totalMoney < 1000000000000 {
+                        Text("You have reached the penultimate amount")
+                            .font(.title3)
+                            .foregroundStyle(.black)
+                        Image("Gem")
+                            .resizable()
+                    } else if totalMoney >= 1000000000000 {
+                        NavigationLink(destination: GgsView()) {
+                            Text("Ggs")
                         }
-                    }
+                        
+                    } else if totalMoney < numberofmoneygambled {
+                        Text("No you don't. I am God. Click this, It is your last Chance")
+                            .font(.title)
+                            .foregroundColor(.yellow)
+                        
+                        
+                        Button(action: {
+                            
+                            fatalError("Damn cheater")
+                            
+                        }, label: {
+                            
+                            Image("Anti-cheater")
+                                .resizable()
+                                .frame(maxWidth: .infinity,maxHeight: .infinity)
+                                .foregroundColor(.red)
+                            
+                        })
                         
                     }
-                    func roulette () {
-                        if chosenSentence == "Red" && colorOfGambling == "Red" {
-                            resultOfGambling = "Fate has decided you the winner"
-                            totalMoney = numberofmoneygambled + totalMoney
-                        } else if chosenSentence == "Red" && colorOfGambling == "Black" {
-                            resultOfGambling = "Fate has decided you the loser"
-                            totalMoney = totalMoney - numberofmoneygambled
-                        } else if chosenSentence == "Black" && colorOfGambling == "Black" {
-                            resultOfGambling = "Fate has decided you the winner"
-                            totalMoney = numberofmoneygambled + totalMoney
-                        } else if chosenSentence == "Black" && colorOfGambling == "Red" {
-                            resultOfGambling = "Fate has decided you the loser"
-                            totalMoney = totalMoney - numberofmoneygambled
-                            
-                        } else {
-                            resultOfGambling =
-                            "select a valid color and press the button to leave fate with luck"
-                                            numberOnWheel = 0
-                                            
-                                        }
-                                    
-                                    }
-                                    func No () {
-                                        if totalMoney < numberofmoneygambled {
-                                            numberofmoneygambled = 0
-                                            numberOnWheel = 0
-                                            chosenSentence = ""
-                                            totalMoney = 0
-                                            
-                                            
-                                        } else if chosenSentence == "OpenSesame" {
-                                            totalMoney = 1000000000
-                                        } else if chosenSentence == "OwnersHighscore" {
-                                            totalMoney = 10000000000
-                                        } else if chosenSentence == "Test" {
-                                            totalMoney = 1000000000000
-                                        }
-                                        
-                                    }
-
+                }
+                
+            }
+        }
+        
+    }
+    func roulette () {
+        if chosenSentence == "Red" && colorOfGambling == "Red" {
+            resultOfGambling = "Fate has decided you the winner"
+            totalMoney = numberofmoneygambled + totalMoney
+        } else if chosenSentence == "Red" && colorOfGambling == "Black" {
+            resultOfGambling = "Fate has decided you the loser"
+            totalMoney = totalMoney - numberofmoneygambled
+        } else if chosenSentence == "Black" && colorOfGambling == "Black" {
+            resultOfGambling = "Fate has decided you the winner"
+            totalMoney = numberofmoneygambled + totalMoney
+        } else if chosenSentence == "Black" && colorOfGambling == "Red" {
+            resultOfGambling = "Fate has decided you the loser"
+            totalMoney = totalMoney - numberofmoneygambled
+            
+        } else {
+            resultOfGambling =
+            "select a valid color and press the button to leave fate with luck"
+            numberOnWheel = 0
+            
+        }
+        
+    }
+    func No () {
+        if totalMoney < numberofmoneygambled {
+            numberofmoneygambled = 0
+            numberOnWheel = 0
+            chosenSentence = ""
+            totalMoney = 0
+            
+            
+        } else if chosenSentence == "OpenSesame" {
+            totalMoney = 1000000000
+        } else if chosenSentence == "OwnersHighscore" {
+            totalMoney = 10000000000
+        } else if chosenSentence == "Test" {
+            totalMoney = 1000000000000
+        }
+        
+    }
+    
     func plswork () {
         if numbersOnWheel == [3,12,7,18,9,14,1,16,5,23,30,36,27,34,25,21,19,32] {
             colorOfGambling = "Red"

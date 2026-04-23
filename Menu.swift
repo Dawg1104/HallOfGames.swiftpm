@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct Menu: View {
-    var games: Dictionary<String, View> = [
+    var games: Dictionary<String, any View> = [
         "BlackJack": BlackJack(),
         "FiveNightsAtJobApplications": EmptyView(),
-        "JumpyBird": EmptyView(),
+        "JumpyBird": JumpyBird(),
         "Pong": Pong(),
-        "PopTheLock": EmptyView(),
+        "PopTheLock": PopTheLock(),
         "RNG": EmptyView(),
         "Roulette": EmptyView(),
         "War": EmptyView(),

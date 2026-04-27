@@ -13,8 +13,17 @@ struct JumpyBird: View {
     @State var velocity: CGFloat = 0
     @State var pipeX: CGFloat = 400
     
-    let gravity: CGFloat = 0.5
-    let jump: CGFloat = -8
+    // Random pipe size
+    @State var pipeHeight: CGFloat = 300
+    @State var pipeY: CGFloat = 400
+    
+    // Gap system
+    @State var gapY: CGFloat = 300
+    let gapSize: CGFloat = 200
+    
+    // Physics
+    let gravity: CGFloat = 0.4
+    let jump: CGFloat = -10
     
     var body: some View {
         
@@ -30,11 +39,17 @@ struct JumpyBird: View {
             
             
             Rectangle()
-                .frame(width: 60, height: 300)
-                .position(x: pipeX, y: 400)
+                .frame(width: 60, height: gapY - gapSize / 2)
+                .position(x: pipeX, y: (gapY - gapSize / 2) / 2)
             
             
-                
+            Rectangle()
+                .frame(width: 60, height: 800)
+                .position(x: pipeX, y: gapY + gapSize/2 + 400)
+            
+            
+            
+            
             
             
                 .onAppear {
@@ -47,11 +62,11 @@ struct JumpyBird: View {
                         
                         if pipeX < -50 {
                             pipeX = 400
+                            
+                            gapY = CGFloat.random(in: 150...300)
                         }
                     }
                 }
         }
     }
-    
 }
-

@@ -25,6 +25,12 @@ struct JumpyBird: View {
     let gravity: CGFloat = 0.4
     let jump: CGFloat = -10
     
+    // Ground
+    let groundY: CGFloat = 650
+    
+    let pipeWidth: CGFloat = 60
+    
+    
     var body: some View {
         
         ZStack {
@@ -37,17 +43,23 @@ struct JumpyBird: View {
                 .frame(width: 40, height: 40)
                 .position(x: 100, y: birdY)
             
-            
+            // Top pipe
             Rectangle()
-                .frame(width: 60, height: gapY - gapSize / 2)
+                .frame(width: pipeWidth, height: gapY - gapSize / 2)
                 .position(x: pipeX, y: (gapY - gapSize / 2) / 2)
             
-            
+            // Bottom pipe
             Rectangle()
                 .frame(width: 60, height: 800)
                 .position(x: pipeX, y: gapY + gapSize/2 + 400)
             
             
+            // Ground
+            Rectangle()
+                .fill(Color.green)
+                .frame(height: 100)
+                .frame(maxWidth: .infinity)
+                .position(x: 200, y: 700)
             
             
             
@@ -59,6 +71,48 @@ struct JumpyBird: View {
                         birdY += velocity
                         
                         pipeX -= 3
+                        
+                        
+                        //  Bird Hitbox
+                        let bird = CGRect(
+                            x: 100,
+                            y: birdY,
+                            width: 40,
+                            height: 40
+                        )
+                        
+                        // Pipe Hitbow
+                        let topPipe = CGRect(
+                            x: pipeX,
+                            y: 0,
+                            width: 60,
+                            height: gapY - gapSize / 2
+                        )
+                        
+                        // Pipe Hitbow
+                        let bottomPipe = CGRect(
+                            x: pipeX,
+                            y: gapY + gapSize / 2,
+                            width: 60,
+                            height: 800
+                        )
+                        
+                        // Collision Check
+                        if bird.intersects(topPipe) || bird.intersects(bottomPipe) {
+                            birdY = 300
+                            velocity = 0
+                            pipeX = 400
+                            gapY = CGFloat.random(in: 150...500)
+                        }
+                        
+                        // Ground = dead
+                        if birdY > groundY {
+                            birdY = 300
+                            velocity = 0
+                            pipeX = 400
+                            gapY = CGFloat.random(in: 150...500)
+                        }
+                        
                         
                         if pipeX < -50 {
                             pipeX = 400

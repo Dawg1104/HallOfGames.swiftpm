@@ -1,5 +1,5 @@
 
-// yo quick question are pastel femboys or goth femboys better?
+
 import SwiftUI
 
 struct RouletteView: View {
@@ -10,7 +10,7 @@ struct RouletteView: View {
     @State var numberOnWheel = 0
     let numberofmoneystartedwith = 500
     @State var numberofmoneygambled = 0
-    @AppStorage("Moolah") var totalMoney = 500
+    @AppStorage("GP") var totalGamepoints = 500
     @State var angle = 0.0
     @State var highlightColor: Color? = nil
     @State var cheating = ""
@@ -96,9 +96,9 @@ struct RouletteView: View {
                     
                     
                     Text("\(resultOfGambling)")
-                    Text("\(totalMoney)")
+                    Text("\(totalGamepoints)")
                         .font(.title2)
-                    if totalMoney <= 0 {
+                    if totalGamepoints <= 0 {
                         Text ("Out of money pal. Reset the game")
                             .font(.largeTitle)
                             .foregroundColor(.red)
@@ -106,7 +106,7 @@ struct RouletteView: View {
                         Button("reset") {
                             numberofmoneygambled = 0
                             chosenSentence = ""
-                            totalMoney = 500
+                            totalGamepoints = 500
                             
                         }
                         
@@ -116,36 +116,36 @@ struct RouletteView: View {
                         
                         
                         
-                    } else if totalMoney >= 10000 && totalMoney < 100000 {
+                    } else if totalGamepoints >= 10000 && totalGamepoints < 100000 {
                         Text("You are very lucky")
                             .font(.largeTitle)
                             .foregroundColor(.red)
-                    } else if totalMoney >= 100000 && totalMoney < 1000000 {
+                    } else if totalGamepoints >= 100000 && totalGamepoints < 1000000 {
                         Text("You are ULTRA lucky")
                             .font(.largeTitle)
                             .foregroundColor(.red)
-                    } else if totalMoney >= 1000000 && totalMoney < 1000000000 {
+                    } else if totalGamepoints >= 1000000 && totalGamepoints < 1000000000 {
                         Text("YOU HAVE INFINITE LUCK")
                             .font(.title3)
                             .foregroundColor(.blue)
-                    } else if totalMoney >= 1000000000 && totalMoney < 100000000000 {
+                    } else if totalGamepoints >= 1000000000 && totalGamepoints < 100000000000 {
                         Text("TOP 1 LUCK")
                             .font(.title3)
                             .foregroundColor(.green)
                         Image("What was he cooking")
                             .resizable()
-                    } else if totalMoney >= 100000000000 && totalMoney < 1000000000000 {
+                    } else if totalGamepoints >= 100000000000 && totalGamepoints < 1000000000000 {
                         Text("You have reached the penultimate amount")
                             .font(.title3)
                             .foregroundStyle(.black)
                         Image("Gem")
                             .resizable()
-                    } else if totalMoney >= 1000000000000 {
+                    } else if totalGamepoints >= 1000000000000 {
                         NavigationLink(destination: GgsView()) {
                             Text("Ggs")
                         }
                         
-                    } else if totalMoney < numberofmoneygambled {
+                    } else if totalGamepoints < numberofmoneygambled {
                         Text("No you don't. I am God. Click this, It is your last Chance")
                             .font(.title)
                             .foregroundColor(.yellow)
@@ -174,16 +174,16 @@ struct RouletteView: View {
     func roulette () {
         if chosenSentence == "Red" && colorOfGambling == "Red" {
             resultOfGambling = "Fate has decided you the winner"
-            totalMoney = numberofmoneygambled + totalMoney
+            totalGamepoints = numberofmoneygambled + totalGamepoints
         } else if chosenSentence == "Red" && colorOfGambling == "Black" {
             resultOfGambling = "Fate has decided you the loser"
-            totalMoney = totalMoney - numberofmoneygambled
+            totalGamepoints = totalGamepoints - numberofmoneygambled
         } else if chosenSentence == "Black" && colorOfGambling == "Black" {
             resultOfGambling = "Fate has decided you the winner"
-            totalMoney = numberofmoneygambled + totalMoney
+            totalGamepoints = numberofmoneygambled + totalGamepoints
         } else if chosenSentence == "Black" && colorOfGambling == "Red" {
             resultOfGambling = "Fate has decided you the loser"
-            totalMoney = totalMoney - numberofmoneygambled
+            totalGamepoints = totalGamepoints - numberofmoneygambled
             
         } else {
             resultOfGambling =
@@ -194,19 +194,19 @@ struct RouletteView: View {
         
     }
     func No () {
-        if totalMoney < numberofmoneygambled {
+        if totalGamepoints < numberofmoneygambled {
             numberofmoneygambled = 0
             numberOnWheel = 0
             chosenSentence = ""
-            totalMoney = 0
+            totalGamepoints = 0
             
             
         } else if chosenSentence == "OpenSesame" {
-            totalMoney = 1000000000
+            totalGamepoints = 1000000000
         } else if chosenSentence == "OwnersHighscore" {
-            totalMoney = 10000000000
+            totalGamepoints = 10000000000
         } else if chosenSentence == "Test" {
-            totalMoney = 1000000000000
+            totalGamepoints = 1000000000000
         }
         
     }

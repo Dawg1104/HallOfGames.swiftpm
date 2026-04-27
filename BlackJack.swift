@@ -8,17 +8,39 @@
 import SwiftUI
 struct BlackJack: View {
     @State var playerScore = 0
+    @State private var isDisabled: Bool = false
     @State var computerScore = 0
     @State var cardImage = ""
     @State var number = 0
+    @State var endGameDisplay = ""
+    @AppStorage("wins") var highestWinStreak = 0
+    @AppStorage("wins1") var TotalWins = 0
+    @AppStorage("wins2") var WinStreak = 0
+   
     var body: some View {
         ZStack {
             Image("card table")
                 .resizable()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             VStack {
+                HStack{
+                    Text("Current winstreak: \(WinStreak)")
+                        .font(Font.system(size: 10, weight: .heavy, design: .monospaced))
+                        .frame(width: 100, height: 30)
+                        .background(.red)
+                    Text("Highest winstreak: \(highestWinStreak)")
+                        .font(Font.system(size: 10, weight: .heavy, design: .monospaced))
+                        .frame(width: 100, height: 30)
+                        .background(.gray)
+                    Text("Total wins: \(TotalWins)")
+                        .font(Font.system(size: 10, weight: .heavy, design: .monospaced))
+                        .frame(width: 100, height: 30)
+                        .background(.green)
+                    
+                }
                 Text("computer score: \(computerScore)")
                     .font(.system(size: 30, weight: .heavy, design: .monospaced))
+                Text(endGameDisplay)
                 HStack {
                     Image("deckOfCards")
                         .resizable()
@@ -27,21 +49,51 @@ struct BlackJack: View {
                         .resizable()
                         .frame(width: 100, height: 200)
                 }
+                Text("Player Score: \(playerScore)")
+                    .font(.system(size: 30, weight: .heavy, design: .monospaced))
                 Button {
+                    isDisabled = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            isDisabled = false
                     number = Int.random(in: 1...10)
                     switch number {
                     case 1: cardImage = "AceOfHearts"
-                        number += 1
+                        playerScore += 1
+                    case 2: cardImage = "2OfHearts"
+                        playerScore += 2
+                        case 3: cardImage = "3OfHearts"
+                        playerScore += 3
+                        case 4: cardImage = "4OfHearts"
+                        playerScore += 4
                     default: cardImage = "AceOfHearts"
-                        number += 1
+                        playerScore += 1
+                    }
+                    if playerScore > 21 {
+                        playerScore = 0
+                        endGameDisplay = "BUST"
+                       
+            }
                     }
                 } label: {
                     Image("BHIT")
                         .resizable()
                         .frame(width: 200, height: 125)
                 }
+                .disabled(isDisabled)
                 Button {
-                    
+                    computerScore = Int.random(in: 1...21)
+                    if computerScore > playerScore {
+                        endGameDisplay = "You lose"
+                        WinStreak = 0
+                    } else if computerScore < playerScore {
+                        endGameDisplay = "you win"
+                        WinStreak += 1
+                        if WinStreak > highestWinStreak {
+                            highestWinStreak = WinStreak
+                        }
+                    }
+                    computerScore = 0
+                    playerScore = 0
                 } label: {
                     Image("BSTAND")
                         .resizable()

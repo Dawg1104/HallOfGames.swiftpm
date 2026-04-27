@@ -17,11 +17,11 @@ struct ContentView: View {
                     
                     NavigationLink(destination: Menu()) {
                         Text("Menu")
-                                .padding()
-                                .frame(maxWidth: 100, maxHeight: 40)
-                                .background(Color.orange)
-                                .foregroundColor(.white)
-                                .clipShape(Capsule())
+                            .padding()
+                            .frame(maxWidth: 100, maxHeight: 40)
+                            .background(Color.orange)
+                            .foregroundColor(.white)
+                            .clipShape(Capsule())
                     }
                     .foregroundStyle(Color.white)
                 }

@@ -191,7 +191,7 @@ struct RNGView: View {
         ]
         var body: some View {
             VStack {
-                Text("Kingdoge's Rng")
+                Text("Hall of Games' RNG")
                     .padding()
                 TextField("Enter Your Name", text: $name)
                     .textFieldStyle(.roundedBorder)

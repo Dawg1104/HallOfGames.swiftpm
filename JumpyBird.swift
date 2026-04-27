@@ -30,6 +30,8 @@ struct JumpyBird: View {
     
     let pipeWidth: CGFloat = 60
     
+    let screenHeight: CGFloat = 800
+    
     
     var body: some View {
         
@@ -39,8 +41,10 @@ struct JumpyBird: View {
                     velocity = jump
                 }
             
-            Circle()
-                .frame(width: 40, height: 40)
+            // Bird
+            Image("FlappyBird")
+                .resizable()
+                .frame(width: 100, height: 60)
                 .position(x: 100, y: birdY)
             
             // Top pipe
@@ -50,7 +54,7 @@ struct JumpyBird: View {
             
             // Bottom pipe
             Rectangle()
-                .frame(width: 60, height: 800)
+                .frame(width: pipeWidth, height: 800)
                 .position(x: pipeX, y: gapY + gapSize/2 + 400)
             
             
@@ -75,30 +79,31 @@ struct JumpyBird: View {
                         
                         //  Bird Hitbox
                         let bird = CGRect(
-                            x: 100,
-                            y: birdY,
-                            width: 40,
-                            height: 40
+                            x: 100 - 50,
+                            y: birdY - 30,
+                            width: 100,
+                            height: 60
                         )
                         
                         // Pipe Hitbow
                         let topPipe = CGRect(
-                            x: pipeX,
+                            x: pipeX - pipeWidth / 2,
                             y: 0,
-                            width: 60,
+                            width: pipeWidth,
                             height: gapY - gapSize / 2
                         )
                         
                         // Pipe Hitbow
                         let bottomPipe = CGRect(
-                            x: pipeX,
+                            x: pipeX - pipeWidth / 2,
                             y: gapY + gapSize / 2,
-                            width: 60,
+                            width: pipeWidth,
                             height: 800
                         )
                         
                         // Collision Check
-                        if bird.intersects(topPipe) || bird.intersects(bottomPipe) {
+                        if bird.intersects(topPipe.insetBy(dx: 4, dy: 4)) ||
+                           bird.intersects(bottomPipe.insetBy(dx: 4, dy: 4)) {
                             birdY = 300
                             velocity = 0
                             pipeX = 400

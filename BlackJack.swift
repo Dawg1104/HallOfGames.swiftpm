@@ -13,12 +13,31 @@ struct BlackJack: View {
     @State var cardImage = ""
     @State var number = 0
     @State var endGameDisplay = ""
+    @AppStorage("wins") var highestWinStreak = 0
+    @AppStorage("wins1") var TotalWins = 0
+    @AppStorage("wins2") var WinStreak = 0
+   
     var body: some View {
         ZStack {
             Image("card table")
                 .resizable()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             VStack {
+                HStack{
+                    Text("Current winstreak: \(WinStreak)")
+                        .font(Font.system(size: 10, weight: .heavy, design: .monospaced))
+                        .frame(width: 100, height: 30)
+                        .background(.red)
+                    Text("Highest winstreak: \(highestWinStreak)")
+                        .font(Font.system(size: 10, weight: .heavy, design: .monospaced))
+                        .frame(width: 100, height: 30)
+                        .background(.gray)
+                    Text("Total wins: \(TotalWins)")
+                        .font(Font.system(size: 10, weight: .heavy, design: .monospaced))
+                        .frame(width: 100, height: 30)
+                        .background(.green)
+                    
+                }
                 Text("computer score: \(computerScore)")
                     .font(.system(size: 30, weight: .heavy, design: .monospaced))
                 Text(endGameDisplay)
@@ -62,7 +81,19 @@ struct BlackJack: View {
                 }
                 .disabled(isDisabled)
                 Button {
-                    
+                    computerScore = Int.random(in: 1...21)
+                    if computerScore > playerScore {
+                        endGameDisplay = "You lose"
+                        WinStreak = 0
+                    } else if computerScore < playerScore {
+                        endGameDisplay = "you win"
+                        WinStreak += 1
+                        if WinStreak > highestWinStreak {
+                            highestWinStreak = WinStreak
+                        }
+                    }
+                    computerScore = 0
+                    playerScore = 0
                 } label: {
                     Image("BSTAND")
                         .resizable()

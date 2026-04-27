@@ -65,12 +65,25 @@ struct BlackJack: View {
                         playerScore += 3
                         case 4: cardImage = "4OfHearts"
                         playerScore += 4
+                    case 5: cardImage = "5OfHearts"
+                        playerScore += 5
+                    case 6: cardImage = "6OfHearts"
+                        playerScore += 6
+                    case 7: cardImage = "7OfHearts"
+                        playerScore += 7
+                    case 8: cardImage = "8OfHearts"
+                        playerScore += 8
+                    case 9: cardImage = "9OfHearts"
+                        playerScore += 9
+                    case 10: cardImage = "10OfHearts"
+                        playerScore += 10
                     default: cardImage = "AceOfHearts"
                         playerScore += 1
                     }
                     if playerScore > 21 {
                         playerScore = 0
                         endGameDisplay = "BUST"
+                        WinStreak = 0
                        
             }
                     }
@@ -81,19 +94,23 @@ struct BlackJack: View {
                 }
                 .disabled(isDisabled)
                 Button {
-                    computerScore = Int.random(in: 1...21)
-                    if computerScore > playerScore {
-                        endGameDisplay = "You lose"
-                        WinStreak = 0
-                    } else if computerScore < playerScore {
-                        endGameDisplay = "you win"
-                        WinStreak += 1
-                        if WinStreak > highestWinStreak {
-                            highestWinStreak = WinStreak
+                    Task{
+                        computerScore = Int.random(in: 1...21)
+                        if computerScore > playerScore {
+                            endGameDisplay = "You lose"
+                            WinStreak = 0
+                        } else if computerScore < playerScore {
+                            endGameDisplay = "you win"
+                            WinStreak += 1
+                            TotalWins += 1
+                            if WinStreak > highestWinStreak {
+                                highestWinStreak = WinStreak
+                            }
                         }
+                        try? await Task.sleep(nanoseconds: 2_000_000_000)
+                        computerScore = 0
+                        playerScore = 0
                     }
-                    computerScore = 0
-                    playerScore = 0
                 } label: {
                     Image("BSTAND")
                         .resizable()

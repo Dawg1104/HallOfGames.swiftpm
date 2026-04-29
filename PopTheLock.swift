@@ -3,20 +3,33 @@ import SwiftUI
 struct PopTheLock: View {
     @AppStorage("highScore") var highScore: Int = 0
     @State var score = 0
+    @State var loseScore = 0
     @State private var didLose = false
     var body: some View {
-        ZStack {
-            Color.blue.ignoresSafeArea()
-            VStack {
-                Text("Score: \(score)")
-                    .font(.largeTitle)
-                Lock(score: $score, highScore: $highScore, didLose: $didLose)
-                
-            }
-            .sheet(isPresented: $didLose, onDismiss: {
-                score = 0
-            }) {
-                PopTheLockLose(score: $score)
+        NavigationStack {
+            ZStack {
+                Color.blue.ignoresSafeArea()
+                VStack {
+                    Text("Score: \(score)")
+                        .font(.largeTitle)
+                    Lock(score: $score, highScore: $highScore, didLose: $didLose, loseScore:  $loseScore)
+                    
+                    NavigationLink {
+                        PopTheLockVersus()
+                    } label: {
+                        ZStack {
+                            Rectangle()
+                                .frame(width: 100, height: 100)
+                            Text("Versus")
+                                .foregroundStyle(.black)
+                        }
+                    }
+                    NavigationLink(
+                        destination: PopTheLockLose(score: loseScore, versus: false),
+                                isActive: $didLose,
+                                label: { EmptyView() }
+                            )
+                }
             }
         }
     }
@@ -26,6 +39,7 @@ struct Lock: View {
     @Binding var score: Int
     @Binding var highScore : Int
     @Binding var didLose: Bool
+    @Binding var loseScore: Int
     @State private var time: Double = 0.0
     let timer = Timer.publish(every: 0.016, on: .main, in: .common).autoconnect()
     @State private var targetT: Double = .random(in: generateRandomPos())
@@ -80,7 +94,9 @@ struct Lock: View {
             score += 1
         } else {
             highScore = max(score, highScore)
+            loseScore = score
             didLose = true
+            score = 0
         }
     }
     
@@ -111,7 +127,8 @@ func generateRandomPos() -> ClosedRange<Double> {
 
 
 struct PopTheLockLose: View {
-    @Binding var score: Int
+    @State var score: Int
+    @State var versus: Bool
     @AppStorage("highScore") var highScore: Int = 0
     var body: some View {
         Text("You Lost")

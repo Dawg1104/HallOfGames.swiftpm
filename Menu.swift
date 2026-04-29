@@ -91,6 +91,15 @@ struct Menu: View {
                             .foregroundColor(.white)
                             .clipShape(Capsule())
                     }
+                    NavigationLink(destination: LarpGame()) {
+                        Text("Clicker")
+                            .padding()
+                            .frame(maxWidth: 150, maxHeight: 60)
+                            .background(Color.orange)
+                            .foregroundColor(.white)
+                            .clipShape(Capsule())
+                        
+                    }
                 }
             }
         }

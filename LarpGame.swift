@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct LarpGame: View {
-    @State var larps: Int = 0
-    @State var autolarpersowned: Int = 0
-    @State var larpsahursowned: Int = 0
-    @State var autolarpercost: Int = 10
-    @State var larppsgain: Int = 0
-    @State var larpssahurcost: Int = 100
+    @AppStorage("lps") var larps: Int = 0
+    @AppStorage("alo") var autolarpersowned: Int = 0
+    @AppStorage("lso") var larpsahursowned: Int = 0
+    @AppStorage("alc") var autolarpercost: Int = 10
+    @AppStorage("lps2") var larppsgain: Int = 0
+    @AppStorage("lsc") var larpssahurcost: Int = 100
     let lastOpen = Date()
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     

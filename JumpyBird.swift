@@ -5,6 +5,9 @@
 //  Created by Nikolay K. Danchev on 4/17/26.
 //
 
+// CGFloat: a number type used for screen positions and sizes (like X, Y, width, and height).
+
+
 import SwiftUI
 
 struct JumpyBird: View {
@@ -148,7 +151,7 @@ struct JumpyBird: View {
                     y: 0,
                     width: pipeWidth,
                     height: gapY - gapSize / 2
-                ).insetBy(dx: 20, dy: 0)
+                ).insetBy(dx: 20, dy: 0)   // Shrinks hitbox
                 
                 
                 // Bottom pipe Hitbox
@@ -157,12 +160,12 @@ struct JumpyBird: View {
                     y: gapY + gapSize / 2,
                     width: pipeWidth,
                     height: 800
-                ).insetBy(dx: 20, dy: 0)
+                ).insetBy(dx: 20, dy: 0)   // Shrinks hitbox
                 
                 
                 // Collision Check
                 if bird.intersects(topPipe) ||
-                    bird.intersects(bottomPipe) {
+                    bird.intersects(bottomPipe) {    // Checks if bird is touching top or bottom pipe
                     
                     // Reset player
                     birdY = 300

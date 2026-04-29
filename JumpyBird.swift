@@ -9,43 +9,57 @@ import SwiftUI
 
 struct JumpyBird: View {
     
+    // Bird vertical position
     @State var birdY: CGFloat = 300
+    
+    // Bird speed
     @State var velocity: CGFloat = 0
+    
+    // Pipe horizontal position
     @State var pipeX: CGFloat = 400
     
+    // Starts and pauses game
     @State var gameStarted = false
     
-    // Gap system
+    // Pipe gap vertical position
     @State var gapY: CGFloat = 300
+    
+    // Sie of gap between pipes
     let gapSize: CGFloat = 200
     
     // Physics
     let gravity: CGFloat = 0.5
     let jump: CGFloat = -10
     
-    // Ground
+    // Ground death zone
     let groundY: CGFloat = 650
     
     // Points
     @State var score = 0
+    // Prevents double points per pipe
     @State var scored = false
     
+    // Pipe thickness
     let pipeWidth: CGFloat = 60
+    
+    // Screen reference height
     let screenHeight: CGFloat = 800
     
     
     var body: some View {
         
         ZStack {
+            
+            // Background color
             Color.blue.ignoresSafeArea()
                 .onTapGesture {
                     if gameStarted {
-                        velocity = jump
+                        velocity = jump  // Makes bird jump
                     }
                 }
             
             
-            // Points
+            // Score display
             Text("Score: \(score)")
                 .foregroundColor(.white)
                 .font(.title)
@@ -59,6 +73,7 @@ struct JumpyBird: View {
                 .position(x: 100, y: birdY)
             
             
+            // Bottom pipe hieght calculation
             let bottomHeight = screenHeight - (gapY + gapSize / 2)
             
             
@@ -96,12 +111,12 @@ struct JumpyBird: View {
         
         
         
-        
+        // Game Loop
         .onAppear {
             Timer.scheduledTimer(withTimeInterval: 0.02, repeats: true) { _ in
                 
                 
-                
+                // Only run game if started
                 if gameStarted {
                     velocity += gravity
                     birdY += velocity
@@ -109,12 +124,11 @@ struct JumpyBird: View {
                 }
                 
                 
+                // Score system
                 if gameStarted {
-                    
-                    // score once when pipe passes bird
                     if pipeX < 100 && !scored {
-                        score += 1
-                        scored = true
+                        score += 1      // Add point
+                        scored = true   // Prevent double scoring
                     }
                 }
                 
@@ -149,27 +163,27 @@ struct JumpyBird: View {
                 // Collision Check
                 if bird.intersects(topPipe) ||
                     bird.intersects(bottomPipe) {
+                    
+                    // Reset player
                     birdY = 300
                     velocity = 0
                     pipeX = 400
                     gapY = CGFloat.random(in: 150...500)
-                    
                     score = 0
                 }
                 
                 
-                // Ground = dead
+                // Ground collision
                 if birdY > groundY {
                     birdY = 300
                     velocity = 0
                     pipeX = 400
                     gapY = CGFloat.random(in: 150...500)
-                    
                     score = 0
-                    
                 }
                 
                 
+                // Pipe reset
                 if pipeX < -50 {
                     pipeX = 400
                     gapY = CGFloat.random(in: 150...300)

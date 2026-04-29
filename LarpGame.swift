@@ -14,6 +14,7 @@ struct LarpGame: View {
     @State var autolarpercost: Int = 10
     @State var larppsgain: Int = 0
     @State var larpssahurcost: Int = 100
+    let lastOpen = Date()
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     var body: some View {
@@ -21,6 +22,7 @@ struct LarpGame: View {
             Text("Larp Clicker")
                 .font(.largeTitle)
             Text("Larps: \(larps)")
+            Text("Larps pers second (lps): \(larppsgain)")
             HStack {
                 Button {
                     larps += 1
@@ -30,8 +32,12 @@ struct LarpGame: View {
                 
                 
                 VStack{
-                    Text("Auto-Larper")
-                        .font(.title)
+                    HStack {
+                        
+                        Text("Auto-Larper")
+                            .font(.title)
+                    }
+                    Text("Owned: \(autolarpersowned)")
                     Button("Buy Auto-Larper, cost \(autolarpercost)") {
                         if larps >= autolarpercost {
                             autolarpersowned += 1
@@ -40,8 +46,13 @@ struct LarpGame: View {
                             larppsgain += 1
                         }
                     }
-                    Text("Larp Sahur")
-                        .font(.title)
+                    HStack {
+                        
+                        
+                        Text("Larp Sahur")
+                            .font(.title)
+                    }
+                    Text("Owned: \(larpsahursowned)")
                     Button("Buy larp sahur, cost \(larpssahurcost)") {
                         if larps >= larpssahurcost {
                             
@@ -57,7 +68,17 @@ struct LarpGame: View {
             
             .onReceive(timer) { _ in
                 larps += larppsgain}
+            
         }
     }
     
+    
+}
+func format(_ num: Int) -> String {
+    if num >= 1_000_000 {
+        return "\(num / 1_000_000)M"
+    } else if num >= 1_000 {
+        return "\(num / 1_000)K"
+    }
+    return "\(num)"
 }

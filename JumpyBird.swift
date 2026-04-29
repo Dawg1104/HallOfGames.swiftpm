@@ -25,6 +25,14 @@ struct JumpyBird: View {
     let gravity: CGFloat = 0.4
     let jump: CGFloat = -10
     
+    // Ground
+    let groundY: CGFloat = 650
+    
+    let pipeWidth: CGFloat = 60
+    
+    let screenHeight: CGFloat = 800
+    
+    
     var body: some View {
         
         ZStack {
@@ -33,21 +41,29 @@ struct JumpyBird: View {
                     velocity = jump
                 }
             
-            Circle()
-                .frame(width: 40, height: 40)
+            // Bird
+            Image("FlappyBird")
+                .resizable()
+                .frame(width: 100, height: 60)
                 .position(x: 100, y: birdY)
             
-            
+            // Top pipe
             Rectangle()
-                .frame(width: 60, height: gapY - gapSize / 2)
+                .frame(width: pipeWidth, height: gapY - gapSize / 2)
                 .position(x: pipeX, y: (gapY - gapSize / 2) / 2)
             
-            
+            // Bottom pipe
             Rectangle()
-                .frame(width: 60, height: 800)
+                .frame(width: pipeWidth, height: 800)
                 .position(x: pipeX, y: gapY + gapSize/2 + 400)
             
             
+            // Ground
+            Rectangle()
+                .fill(Color.green)
+                .frame(height: 100)
+                .frame(maxWidth: .infinity)
+                .position(x: 200, y: 700)
             
             
             
@@ -59,6 +75,49 @@ struct JumpyBird: View {
                         birdY += velocity
                         
                         pipeX -= 3
+                        
+                        
+                        //  Bird Hitbox
+                        let bird = CGRect(
+                            x: 100 - 50,
+                            y: birdY - 30,
+                            width: 100,
+                            height: 60
+                        )
+                        
+                        // Pipe Hitbow
+                        let topPipe = CGRect(
+                            x: pipeX - pipeWidth / 2,
+                            y: 0,
+                            width: pipeWidth,
+                            height: gapY - gapSize / 2
+                        )
+                        
+                        // Pipe Hitbow
+                        let bottomPipe = CGRect(
+                            x: pipeX - pipeWidth / 2,
+                            y: gapY + gapSize / 2,
+                            width: pipeWidth,
+                            height: 800
+                        )
+                        
+                        // Collision Check
+                        if bird.intersects(topPipe.insetBy(dx: 4, dy: 4)) ||
+                           bird.intersects(bottomPipe.insetBy(dx: 4, dy: 4)) {
+                            birdY = 300
+                            velocity = 0
+                            pipeX = 400
+                            gapY = CGFloat.random(in: 150...500)
+                        }
+                        
+                        // Ground = dead
+                        if birdY > groundY {
+                            birdY = 300
+                            velocity = 0
+                            pipeX = 400
+                            gapY = CGFloat.random(in: 150...500)
+                        }
+                        
                         
                         if pipeX < -50 {
                             pipeX = 400

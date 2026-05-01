@@ -205,9 +205,7 @@ struct RouletteView: View {
             totalGamepoints = 1000000000
         } else if chosenSentence == "OwnersHighscore" {
             totalGamepoints = 10000000000
-        } else if chosenSentence == "Test" {
-            totalGamepoints = 1000000000000
-        }
+        } 
         
     }
     

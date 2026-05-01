@@ -24,17 +24,34 @@ struct LarpGame: View {
     @AppStorage("foc") var factorycost: Int = 25000
     @AppStorage("CLD") var districtowned: Int = 0
     @AppStorage("CLC") var districtcost: Int = 100000
+    @AppStorage("LPCL") var clicksperlarp: Int = 1
+    @AppStorage("RBR") var rebirth: Int = 0
+    @AppStorage("RBC") var rebirthcost: Int = 1000000
     var body: some View {
         VStack {
             Text("Larp Clicker")
                 .font(.largeTitle)
             Text("Larps: \(larps)")
             Text("Larps pers second (lps): \(larppsgain)")
+            Text("Rebirths: \(rebirth)")
             HStack {
                 Button {
-                    larps += 1
+                    larps += clicksperlarp
                 } label: {
                     Image("Larp")
+                }
+                Button("Rebirth: \(rebirthcost)") {
+                    rebirth += 1
+                    clicksperlarp = Int(Double(clicksperlarp) * 2.0)
+                    rebirthcost = Int(Double(rebirthcost) * 10000.0)
+                    larps = 0
+                    autolarpersowned = 0
+                    larpsahursowned = 0
+                    larppsgain = 0
+                    onlinelarperscost = 1000
+                    onlinelarpersowned = 0
+                    autolarpercost = 10
+                    larpssahurcost = 100
                 }
                 
                 

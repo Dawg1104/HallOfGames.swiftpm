@@ -27,11 +27,14 @@ struct PopTheLockVersus: View {
                     
                 Lock(score: $scorePlayerTwo, highScore: $highScore, didLose: $didLosePlayerTwo, loseScore: $loseScorePlayerTwo)
                 
-                NavigationLink(
-                    destination: PopTheLockLose(score: loseScorePlayerOne, versus: true),
-                            isActive: $didLosePlayerOne,
-                            label: { EmptyView() }
-                        )
+
+            }
+            if (didLosePlayerOne || didLosePlayerTwo) {
+                var loserScore: Int = didLosePlayerOne ? loseScorePlayerOne : loseScorePlayerTwo
+                @State var loserDidLose: Binding<Bool> = didLosePlayerOne ? $didLosePlayerOne : $didLosePlayerTwo
+
+                PopTheLockLose(score: loserScore, versus: false, highScore: highScore, loss: loserDidLose)
+                    .ignoresSafeArea()
             }
         }
     }

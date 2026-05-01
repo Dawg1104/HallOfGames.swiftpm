@@ -24,11 +24,10 @@ struct PopTheLock: View {
                                 .foregroundStyle(.black)
                         }
                     }
-                    NavigationLink(
-                        destination: PopTheLockLose(score: loseScore, versus: false),
-                                isActive: $didLose,
-                                label: { EmptyView() }
-                            )
+                }
+                if (didLose) {
+                    PopTheLockLose(score: loseScore, versus: false, highScore: highScore, loss: $didLose)
+                        .ignoresSafeArea()
                 }
             }
         }
@@ -130,9 +129,31 @@ struct PopTheLockLose: View {
     @State var score: Int
     @State var versus: Bool
     @AppStorage("highScore") var highScore: Int = 0
+    @Binding var loss: Bool
     var body: some View {
-        Text("You Lost")
-        Text("Your final score: \(score)")
-        Text("High Score: \(highScore)")
+        ZStack {
+            Color.black
+                .opacity(0.5)
+            VStack {
+                Image("youLostPTL")
+                    .resizable()
+                    .scaledToFit()
+                Text("Your final score: \(score)")
+                    .foregroundStyle(.white)
+                Text("High Score: \(highScore)")
+                    .foregroundStyle(.white)
+                
+                Button(action: { loss.toggle() }) {
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 25)
+                            .frame(width: 100, height: 25)
+                            .foregroundStyle(.blue)
+                        Text("Try Again?")
+                            .foregroundStyle(.white)
+                            .bold()
+                    }
+                }
+            }
+        }
     }
 }

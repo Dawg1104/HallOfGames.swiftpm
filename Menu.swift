@@ -47,7 +47,7 @@ struct Menu: View {
                             .clipShape(Capsule())
                     }
                     
-                    NavigationLink(destination: Pong()) {
+                    NavigationLink(destination: PongView()) {
                         Text("Pong")
                             .padding()
                             .frame(maxWidth: 150, maxHeight: 60)

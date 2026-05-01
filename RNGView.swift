@@ -286,17 +286,16 @@ struct RNGView: View {
                 .opacity(monarchopacity)
             
             
-            
-            
-            
+                            
+                
+            }
         }
     }
-}
-func plswork () {
-    let plswork = true
+    func plswork() {
+        let plswork = true
+        
+    }
+
     
-}
-
-
-
-
+    
+    

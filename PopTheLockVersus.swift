@@ -26,7 +26,6 @@ struct PopTheLockVersus: View {
                     .font(.largeTitle)
                     
                 Lock(score: $scorePlayerTwo, highScore: $highScore, didLose: $didLosePlayerTwo, loseScore: $loseScorePlayerTwo)
-                
 
             }
             if (didLosePlayerOne || didLosePlayerTwo) {

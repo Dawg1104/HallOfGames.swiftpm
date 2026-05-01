@@ -22,6 +22,8 @@ struct LarpGame: View {
     @AppStorage("PLC") var professionalcost: Int = 5000
     @AppStorage("foe") var factoryowned: Int = 0
     @AppStorage("foc") var factorycost: Int = 25000
+    @AppStorage("CLD") var districtowned: Int = 0
+    @AppStorage("CLC") var districtcost: Int = 100000
     var body: some View {
         VStack {
             Text("Larp Clicker")
@@ -54,7 +56,7 @@ struct LarpGame: View {
                         }
                     }
                     HStack {
-                        Image ("larpsahur")
+                        Image ("Larplarpsahur")
                             .resizable()
                             .frame(width: 50, height: 50)
                         
@@ -74,7 +76,7 @@ struct LarpGame: View {
                     }
                     
                     HStack {
-                        Image ("")
+                        Image ("Larp3")
                             .resizable()
                             .frame(width: 50, height: 50)
                         
@@ -82,7 +84,7 @@ struct LarpGame: View {
                             .font(.title)
                     }
                     Text("Owned: \(onlinelarpersowned)")
-                    Button("Buy larp sahur, cost \(onlinelarperscost)") {
+                    Button("Buy online larper, cost \(onlinelarperscost)") {
                         if larps >= onlinelarperscost {
                             
                             
@@ -93,7 +95,7 @@ struct LarpGame: View {
                         }
                     }
                     HStack {
-                        Image ("")
+                        Image ("Larp4")
                             .resizable()
                             .frame(width: 50, height: 50)
                         
@@ -101,7 +103,7 @@ struct LarpGame: View {
                             .font(.title)
                     }
                     Text("Owned: \(professionalowned)")
-                    Button("Buy larp sahur, cost \(professionalcost)") {
+                    Button("Buy prof. larper, cost \(professionalcost)") {
                         if larps >= professionalcost {
                             
                             
@@ -112,22 +114,41 @@ struct LarpGame: View {
                         }
                     }
                     HStack {
-                        Image ("")
+                        Image ("Larp5")
                             .resizable()
                             .frame(width: 50, height: 50)
                         
                         Text("Larp Factory")
                             .font(.title)
                     }
-                    Text("Owned: \(factorycost)")
-                    Button("Buy larp sahur, cost \(factorycost)") {
+                    Text("Owned: \(factoryowned)")
+                    Button("Buy factory, cost \(factorycost)") {
                         if larps >= factorycost {
                             
                             
                             factoryowned += 1
                             larps -= factorycost
                             factorycost = Int(Double(factorycost) * 1.5)
-                            larppsgain += 250
+                            larppsgain += 2500
+                        }
+                    }
+                    HStack {
+                        Image ("Larp6")
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                        
+                        Text("Central Larp District")
+                            .font(.title)
+                    }
+                    Text("Owned: \(districtowned)")
+                    Button("Buy online larper, cost \(districtcost)") {
+                        if larps >= districtcost {
+                            
+                            
+                            districtowned += 1
+                            larps -= districtcost
+                            districtcost = Int(Double(districtcost) * 1.5)
+                            larppsgain += 10000
                         }
                     }
                 }

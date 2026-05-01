@@ -105,9 +105,8 @@ struct RNGView: View {
     @AppStorage("What If?") var whatifisobtained = false
     @AppStorage("chrysalis") var chrysisobtained = false
     
-    // Save rolls
-    @AppStorage("history") var history = ""
-    @State var showHistory = false
+    
+    
     
     
     let auralist: [weightedRNG] = [
@@ -213,8 +212,7 @@ struct RNGView: View {
                 rolls += 1
                 
                 
-                // Save rolls
-                history += auraGiven + "\n"
+                
                 
                 
                 if auraGiven == "The Monarch of All" {
@@ -288,19 +286,8 @@ struct RNGView: View {
                 .opacity(monarchopacity)
             
             
-            // Button to show history
-            Button("Show Rolls") {
-                showHistory.toggle()
-            }
             
-            // Display history
-            if showHistory {
-                ScrollView {
-                    Text(history)
-                        .padding()
-                }
-                .frame(height: 200)
-            }
+            
             
         }
     }

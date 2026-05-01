@@ -95,7 +95,7 @@ struct LarpGame: View {
                         }
                     }
                     HStack {
-                        Image ("")
+                        Image ("Larp4")
                             .resizable()
                             .frame(width: 50, height: 50)
                         
@@ -114,7 +114,7 @@ struct LarpGame: View {
                         }
                     }
                     HStack {
-                        Image ("")
+                        Image ("Larp5")
                             .resizable()
                             .frame(width: 50, height: 50)
                         
@@ -133,7 +133,7 @@ struct LarpGame: View {
                         }
                     }
                     HStack {
-                        Image ("")
+                        Image ("Larp6")
                             .resizable()
                             .frame(width: 50, height: 50)
                         

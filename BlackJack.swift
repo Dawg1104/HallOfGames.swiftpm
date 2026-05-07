@@ -84,6 +84,7 @@ struct BlackJack: View {
                         playerScore = 0
                         endGameDisplay = "BUST"
                         WinStreak = 0
+                        
                        
             }
                     }
@@ -95,7 +96,7 @@ struct BlackJack: View {
                 .disabled(isDisabled)
                 Button {
                     Task{
-                        computerScore = Int.random(in: 1...21)
+                        computerScore = Int.random(in: 2...21)
                         if computerScore > playerScore {
                             endGameDisplay = "You lose"
                             WinStreak = 0
@@ -110,6 +111,8 @@ struct BlackJack: View {
                         try? await Task.sleep(nanoseconds: 2_000_000_000)
                         computerScore = 0
                         playerScore = 0
+                         cardImage = ""
+                        endGameDisplay = ""
                     }
                 } label: {
                     Image("BSTAND")

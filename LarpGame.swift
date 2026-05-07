@@ -27,6 +27,9 @@ struct LarpGame: View {
     @AppStorage("LPCL") var clicksperlarp: Int = 1
     @AppStorage("RBR") var rebirth: Int = 0
     @AppStorage("RBC") var rebirthcost: Int = 1000000
+    @State var showAlert: Bool = false
+    @AppStorage("STAIRSVICTORY") var stairslarpcost: Int = 1000000
+    @AppStorage("StairsVict") var stairslarpowned: Int = 0
     var body: some View {
         VStack {
             Text("Larp Clicker")
@@ -35,27 +38,36 @@ struct LarpGame: View {
             Text("Larps pers second (lps): \(larppsgain)")
             Text("Rebirths: \(rebirth)")
             HStack {
-                Button {
-                    larps += clicksperlarp
-                } label: {
-                    Image("Larp")
+                VStack {
+                    Button {
+                        larps += clicksperlarp
+                    } label: {
+                        Image("Larp")
+                    }
+                    Button("Rebirth: \(rebirthcost)") {
+                        if larps >= rebirthcost {
+                            rebirth += 1
+                            clicksperlarp = Int(Double(clicksperlarp) * 2.0)
+                            rebirthcost = Int(Double(rebirthcost) * 10000.0)
+                            larps = 0
+                            autolarpersowned = 0
+                            larpsahursowned = 0
+                            larppsgain = 0
+                            onlinelarperscost = 1000
+                            onlinelarpersowned = 0
+                            autolarpercost = 10
+                            larpssahurcost = 100
+                            professionalcost = 5000
+                            professionalowned = 0
+                            factorycost = 25000
+                            factoryowned = 0
+                            districtowned = 0
+                            districtcost = 100000
+                        }
+                    }
+                    
                 }
-                Button("Rebirth: \(rebirthcost)") {
-                    rebirth += 1
-                    clicksperlarp = Int(Double(clicksperlarp) * 2.0)
-                    rebirthcost = Int(Double(rebirthcost) * 10000.0)
-                    larps = 0
-                    autolarpersowned = 0
-                    larpsahursowned = 0
-                    larppsgain = 0
-                    onlinelarperscost = 1000
-                    onlinelarpersowned = 0
-                    autolarpercost = 10
-                    larpssahurcost = 100
-                }
-                
-                
-                VStack{
+                ScrollView {
                     HStack {
                         Image("autolarp")
                             .resizable()
@@ -166,6 +178,25 @@ struct LarpGame: View {
                             larps -= districtcost
                             districtcost = Int(Double(districtcost) * 1.5)
                             larppsgain += 10000
+                        }
+                    }
+                    HStack {
+                        Image ("Larp7")
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                        
+                        Text("Stairs Larper")
+                            .font(.title)
+                    }
+                    Text("Owned: \(stairslarpowned)")
+                    Button("Buy online larper, cost \(stairslarpcost)") {
+                        if larps >= stairslarpcost && rebirth >= 1 {
+                            
+                            
+                            stairslarpowned += 1
+                            larps -= stairslarpcost
+                            stairslarpcost = Int(Double(stairslarpcost) * 1.5)
+                            larppsgain += 100000
                         }
                     }
                 }

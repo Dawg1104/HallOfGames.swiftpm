@@ -106,7 +106,7 @@ struct Lock: View {
                 timeChangeValue += 0.001
                 timeChangeValue *= -1
             } else {
-                timeChangeValue += 0.001
+                timeChangeValue += 0.0001
             }
             timeChangeValue *= -1
         } else {
@@ -155,6 +155,40 @@ struct PopTheLockLose: View {
                 .opacity(0.5)
             VStack {
                 Image("youLostPTL")
+                    .resizable()
+                    .scaledToFit()
+                Text("Your final score: \(score)")
+                    .foregroundStyle(.white)
+                Text("High Score: \(highScore)")
+                    .foregroundStyle(.white)
+                
+                Button(action: { loss.toggle(); shouldRestart = true}) {
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 25)
+                            .frame(width: 100, height: 25)
+                            .foregroundStyle(.blue)
+                        Text("Try Again?")
+                            .foregroundStyle(.white)
+                            .bold()
+                    }
+                }
+            }
+        }
+    }
+}
+
+struct PopTheLockWin: View {
+    @AppStorage("shouldRestart") var shouldRestart = false
+    @State var score: Int
+    @State var versus: Bool
+    @AppStorage("highScore") var highScore: Int = 0
+    @Binding var loss: Bool
+    var body: some View {
+        ZStack {
+            Color.black
+                .opacity(0.5)
+            VStack {
+                Image("youWonPTL")
                     .resizable()
                     .scaledToFit()
                 Text("Your final score: \(score)")

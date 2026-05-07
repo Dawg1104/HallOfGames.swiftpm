@@ -17,6 +17,7 @@ let package = Package(
             name: "HallOfGames",
             targets: ["AppModule"],
             bundleIdentifier: "org.jhhs.629470.HallOfGames",
+            teamIdentifier: "Y3RH5QK9JL",
             displayVersion: "1.0",
             bundleVersion: "1",
             appIcon: .placeholder(icon: .running),

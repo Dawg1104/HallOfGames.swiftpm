@@ -17,23 +17,34 @@ struct PopTheLockVersus: View {
                 Text("Score: \(scorePlayerOne)")
                     .font(.largeTitle)
                     .rotationEffect(.degrees(180))
-
+                
                 
                 Divider()
-
+                
                 
                 Text("Score: \(scorePlayerTwo)")
                     .font(.largeTitle)
-                    
+                
                 Lock(score: $scorePlayerTwo, highScore: $highScore, didLose: $didLosePlayerTwo, loseScore: $loseScorePlayerTwo)
-
+                
             }
-            if (didLosePlayerOne || didLosePlayerTwo) {
-                var loserScore: Int = didLosePlayerOne ? loseScorePlayerOne : loseScorePlayerTwo
-                @State var loserDidLose: Binding<Bool> = didLosePlayerOne ? $didLosePlayerOne : $didLosePlayerTwo
-
-                PopTheLockLose(score: loserScore, versus: false, highScore: highScore, loss: loserDidLose)
-                    .ignoresSafeArea()
+            VStack {
+                if (didLosePlayerOne || didLosePlayerTwo) {
+                    var loserScore: Int = didLosePlayerOne ? loseScorePlayerOne : loseScorePlayerTwo
+                    @State var loserDidLose: Binding<Bool> = didLosePlayerOne ? $didLosePlayerOne : $didLosePlayerTwo
+                    if (didLosePlayerOne) {
+                        PopTheLockLose(score: scorePlayerOne, versus: false, highScore: highScore, loss: loserDidLose)
+                            .rotationEffect(Angle(degrees: 180))
+                    } else {
+                        PopTheLockWin(score: scorePlayerTwo, versus: false, highScore: highScore, loss: loserDidLose)
+                            .rotationEffect(Angle(degrees: 180))
+                    }
+                    if (didLosePlayerTwo) {
+                        PopTheLockLose(score: scorePlayerTwo, versus: false, highScore: highScore, loss: loserDidLose)
+                    } else {
+                        PopTheLockWin(score: scorePlayerTwo, versus: false, highScore: highScore, loss: loserDidLose)
+                    }
+                }
             }
         }
     }

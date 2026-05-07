@@ -35,11 +35,13 @@ struct PopTheLock: View {
 }
 
 struct Lock: View {
+    @AppStorage("shouldRestart") var shouldRestart = false
     @Binding var score: Int
     @Binding var highScore : Int
     @Binding var didLose: Bool
     @Binding var loseScore: Int
     @State private var time: Double = 0.0
+    @State private var timeChangeValue: Double = 0.005
     let timer = Timer.publish(every: 0.016, on: .main, in: .common).autoconnect()
     @State private var targetT: Double = .random(in: generateRandomPos())
     private let paddingValue: CGFloat = 15
@@ -80,7 +82,18 @@ struct Lock: View {
             checkCollision()
         }
         .onReceive(timer) { _ in
-            time += 0.005
+            time += timeChangeValue
+        }
+        .onChange(of: shouldRestart) { newValue in
+            if newValue {
+                targetT = .random(in: generateRandomPos())
+                shouldRestart = false
+                time = .random(in: 0.0...1.0)
+                timeChangeValue = 0.005
+                highScore = max(score, highScore)
+                loseScore = score
+                didLose = true
+            }
         }
     }
     
@@ -91,11 +104,16 @@ struct Lock: View {
         if diff < 0.04 || diff > 0.96 {
             self.targetT = .random(in: generateRandomPos())
             score += 1
+            if (timeChangeValue < 0) {
+                timeChangeValue *= -1
+                timeChangeValue += 0.001
+                timeChangeValue *= -1
+            } else {
+                timeChangeValue += 0.0001
+            }
+            timeChangeValue *= -1
         } else {
-            highScore = max(score, highScore)
-            loseScore = score
-            didLose = true
-            score = 0
+            shouldRestart = true
         }
     }
     
@@ -126,6 +144,7 @@ func generateRandomPos() -> ClosedRange<Double> {
 
 
 struct PopTheLockLose: View {
+    @AppStorage("shouldRestart") var shouldRestart = false
     @State var score: Int
     @State var versus: Bool
     @AppStorage("highScore") var highScore: Int = 0
@@ -143,7 +162,41 @@ struct PopTheLockLose: View {
                 Text("High Score: \(highScore)")
                     .foregroundStyle(.white)
                 
-                Button(action: { loss.toggle() }) {
+                Button(action: { loss.toggle(); shouldRestart = true}) {
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 25)
+                            .frame(width: 100, height: 25)
+                            .foregroundStyle(.blue)
+                        Text("Try Again?")
+                            .foregroundStyle(.white)
+                            .bold()
+                    }
+                }
+            }
+        }
+    }
+}
+
+struct PopTheLockWin: View {
+    @AppStorage("shouldRestart") var shouldRestart = false
+    @State var score: Int
+    @State var versus: Bool
+    @AppStorage("highScore") var highScore: Int = 0
+    @Binding var loss: Bool
+    var body: some View {
+        ZStack {
+            Color.black
+                .opacity(0.5)
+            VStack {
+                Image("youWonPTL")
+                    .resizable()
+                    .scaledToFit()
+                Text("Your final score: \(score)")
+                    .foregroundStyle(.white)
+                Text("High Score: \(highScore)")
+                    .foregroundStyle(.white)
+                
+                Button(action: { loss.toggle(); shouldRestart = true}) {
                     ZStack{
                         RoundedRectangle(cornerRadius: 25)
                             .frame(width: 100, height: 25)

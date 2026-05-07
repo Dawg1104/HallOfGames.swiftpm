@@ -90,6 +90,9 @@ struct Lock: View {
                 shouldRestart = false
                 time = .random(in: 0.0...1.0)
                 timeChangeValue = 0.005
+                highScore = max(score, highScore)
+                loseScore = score
+                didLose = true
             }
         }
     }
@@ -110,10 +113,7 @@ struct Lock: View {
             }
             timeChangeValue *= -1
         } else {
-            highScore = max(score, highScore)
-            loseScore = score
-            didLose = true
-            score = 0
+            shouldRestart = true
         }
     }
     

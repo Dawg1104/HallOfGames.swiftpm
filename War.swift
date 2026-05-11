@@ -14,6 +14,7 @@ struct WarView: View {
     @State var Dnumber = 0
     @State var number = 0
     @State var EndText = ""
+    @State var gameText = ""
     var body: some View {
         ZStack {
             Image("card table")

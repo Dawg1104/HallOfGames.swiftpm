@@ -37,243 +37,258 @@ struct LarpGame: View {
     @AppStorage("LarpgodCost") var larpgodcost: Int = 10000000000000
     @AppStorage("LPGO") var larpgodowned: Int = 0
     var body: some View {
-        VStack {
-            Text("Larp Clicker")
-                .font(.largeTitle)
-            Text("Larps: \(larps)")
-            Text("Larps per second (LPS): \(larppsgain)")
-            Text("Rebirths: \(rebirth)")
-            HStack {
-                VStack {
-                    Button {
-                        larps += clicksperlarp
-                    } label: {
-                        Image("Larp")
+        ZStack {
+            
+            Image("larpbg")
+            VStack {
+                Text("Larp Clicker")
+                    .font(.largeTitle)
+                Text("Larps: \(larps)")
+                    .foregroundStyle(.white)
+                Text("Larps per second (LPS): \(larppsgain)")
+                    .foregroundStyle(.white)
+                Text("Rebirths: \(rebirth)")
+                    .foregroundStyle(.white)
+                HStack {
+                    VStack {
+                        Button {
+                            larps += clicksperlarp
+                        } label: {
+                            Image("Larp")
+                        }
+                        Button("Rebirth: \(rebirthcost)") {
+                            if larps >= rebirthcost {
+                                rebirth += 1
+                                clicksperlarp = Int(Double(clicksperlarp) * 2.0)
+                                rebirthcost = Int(Double(rebirthcost) * 2.0)
+                                larps = 0
+                                autolarpersowned = 0
+                                larpsahursowned = 0
+                                larppsgain = 0
+                                onlinelarperscost = 1000
+                                onlinelarpersowned = 0
+                                autolarpercost = 10
+                                larpssahurcost = 100
+                                professionalcost = 5000
+                                professionalowned = 0
+                                factorycost = 25000
+                                factoryowned = 0
+                                districtowned = 0
+                                districtcost = 100000
+                                stairslarpcost = 1000000
+                                stairslarpowned = 0
+                                larpgroupcost = 10000000
+                                larpgroupowned = 0
+                                larpwmpcost = 100000000
+                                larpwmpowned = 0
+                                larpgodcost = 100000000000
+                                larpgodowned = 0
+                                
+                            }
+                        }
+                        
                     }
-                    Button("Rebirth: \(rebirthcost)") {
-                        if larps >= rebirthcost {
-                            rebirth += 1
-                            clicksperlarp = Int(Double(clicksperlarp) * 2.0)
-                            rebirthcost = Int(Double(rebirthcost) * 2.0)
-                            larps = 0
-                            autolarpersowned = 0
-                            larpsahursowned = 0
-                            larppsgain = 0
-                            onlinelarperscost = 1000
-                            onlinelarpersowned = 0
-                            autolarpercost = 10
-                            larpssahurcost = 100
-                            professionalcost = 5000
-                            professionalowned = 0
-                            factorycost = 25000
-                            factoryowned = 0
-                            districtowned = 0
-                            districtcost = 100000
-                            stairslarpcost = 1000000
-                            stairslarpowned = 0
-                            larpgroupcost = 10000000
-                            larpgroupowned = 0
-                            larpwmpcost = 100000000
-                            larpwmpowned = 0
-                            larpgodcost = 100000000000
-                            larpgodowned = 0
+                    ScrollView {
+                        HStack {
+                            Image("autolarp")
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                            Text("Auto-Larper")
+                                .font(.title)
+                                .foregroundStyle(.white)
+                        }
+                        Text("Owned: \(autolarpersowned)")
+                            .foregroundStyle(.white)
+                        Button("Buy Auto-Larper, cost \(autolarpercost)") {
+                            if larps >= autolarpercost {
+                                autolarpersowned += 1
+                                larps -= autolarpercost
+                                autolarpercost = Int(Double(autolarpercost) * 1.5)
+                                larppsgain += 1
+                            }
+                        }
+                        HStack {
+                            Image ("Larplarpsahur")
+                                .resizable()
+                                .frame(width: 50, height: 50)
                             
+                            Text("Larp Sahur")
+                                .font(.title)
+                                .foregroundStyle(.white)
+                        }
+                        Text("Owned: \(larpsahursowned)")
+                            .foregroundStyle(.white)
+                        Button("Buy larp sahur, cost \(larpssahurcost)") {
+                            if larps >= larpssahurcost {
+                                
+                                
+                                larpsahursowned += 1
+                                larps -= larpssahurcost
+                                larpssahurcost = Int(Double(larpssahurcost) * 1.5)
+                                larppsgain += 10
+                            }
+                        }
+                        
+                        HStack {
+                            Image ("Larp3")
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                            
+                            Text("Online Larper")
+                                .font(.title)
+                                .foregroundStyle(.white)
+                        }
+                        Text("Owned: \(onlinelarpersowned)")
+                            .foregroundStyle(.white)
+                        Button("Buy online larper, cost \(onlinelarperscost)") {
+                            if larps >= onlinelarperscost {
+                                
+                                
+                                onlinelarpersowned += 1
+                                larps -= onlinelarperscost
+                                onlinelarperscost = Int(Double(onlinelarperscost) * 1.5)
+                                larppsgain += 100
+                            }
+                        }
+                        HStack {
+                            Image ("Larp4")
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                            
+                            Text("Professional Larper")
+                                .font(.title)
+                                .foregroundStyle(.white)
+                        }
+                        Text("Owned: \(professionalowned)")
+                            .foregroundStyle(.white)
+                        Button("Buy prof. larper, cost \(professionalcost)") {
+                            if larps >= professionalcost {
+                                
+                                
+                                professionalowned += 1
+                                larps -= professionalcost
+                                professionalcost = Int(Double(professionalcost) * 1.5)
+                                larppsgain += 500
+                            }
+                        }
+                        HStack {
+                            Image ("Larp5")
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                            
+                            Text("Larp Factory")
+                                .font(.title)
+                        }
+                        Text("Owned: \(factoryowned)")
+                        Button("Buy factory, cost \(factorycost)") {
+                            if larps >= factorycost {
+                                
+                                
+                                factoryowned += 1
+                                larps -= factorycost
+                                factorycost = Int(Double(factorycost) * 1.5)
+                                larppsgain += 2500
+                            }
+                        }
+                        HStack {
+                            Image ("Larp6")
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                            
+                            Text("Central Larp District")
+                                .font(.title)
+                        }
+                        Text("Owned: \(districtowned)")
+                        Button("Buy online larper, cost \(districtcost)") {
+                            if larps >= districtcost {
+                                
+                                
+                                districtowned += 1
+                                larps -= districtcost
+                                districtcost = Int(Double(districtcost) * 1.5)
+                                larppsgain += 10000
+                            }
+                        }
+                        HStack {
+                            Image ("Larp7")
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                            
+                            Text("Stairs Larper")
+                                .font(.title)
+                        }
+                        Text("Owned: \(stairslarpowned)")
+                        Button("Buy online larper, cost \(stairslarpcost)") {
+                            if larps >= stairslarpcost && rebirth >= 1 {
+                                
+                                
+                                stairslarpowned += 1
+                                larps -= stairslarpcost
+                                stairslarpcost = Int(Double(stairslarpcost) * 1.5)
+                                larppsgain += 100000
+                            }
+                        }
+                        HStack {
+                            Image ("Larp8")
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                            
+                            Text("Ultimate Larper")
+                                .font(.title)
+                        }
+                        Text("Owned: \(larpgroupowned)")
+                        Button("Buy online larper, cost \(larpgroupcost)") {
+                            if larps >= larpgroupcost && rebirth >= 3 {
+                                
+                                
+                                larpgroupowned += 1
+                                larps -= larpgroupcost
+                                larpgroupcost = Int(Double(larpgroupcost) * 1.5)
+                                larppsgain += 1000000
+                            }
+                        }
+                        HStack {
+                            Image ("larp9")
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                            
+                            Text("Emperor Larper")
+                                .font(.title)
+                        }
+                        Text("Owned: \(larpwmpowned)")
+                        Button("Buy online larper, cost \(larpwmpcost)") {
+                            if larps >= larpwmpcost && rebirth >= 7 {
+                                
+                                
+                                larpwmpowned += 1
+                                larps -= larpwmpcost
+                                larpwmpcost = Int(Double(larpwmpcost) * 1.5)
+                                larppsgain += 10000000
+                            }
+                        }
+                        HStack {
+                            Image ("Larp10")
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                            
+                            Text("Larp god")
+                                .font(.title)
+                        }
+                        Text("Owned: \(larpgodowned)")
+                        Button("Buy online larper, cost \(larpgodcost)") {
+                            if larps >= larpgodcost && rebirth >= 15 {
+                                
+                                
+                                larpgodowned += 1
+                                larps -= larpgodcost
+                                larpgodcost = Int(Double(larpgodcost) * 1.5)
+                                larppsgain += 1000000000
+                            }
                         }
                     }
-                    
                 }
-                ScrollView {
-                    HStack {
-                        Image("autolarp")
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                        Text("Auto-Larper")
-                            .font(.title)
-                    }
-                    Text("Owned: \(autolarpersowned)")
-                    Button("Buy Auto-Larper, cost \(autolarpercost)") {
-                        if larps >= autolarpercost {
-                            autolarpersowned += 1
-                            larps -= autolarpercost
-                            autolarpercost = Int(Double(autolarpercost) * 1.5)
-                            larppsgain += 1
-                        }
-                    }
-                    HStack {
-                        Image ("Larplarpsahur")
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                        
-                        Text("Larp Sahur")
-                            .font(.title)
-                    }
-                    Text("Owned: \(larpsahursowned)")
-                    Button("Buy larp sahur, cost \(larpssahurcost)") {
-                        if larps >= larpssahurcost {
-                            
-                            
-                            larpsahursowned += 1
-                            larps -= larpssahurcost
-                            larpssahurcost = Int(Double(larpssahurcost) * 1.5)
-                            larppsgain += 10
-                        }
-                    }
-                    
-                    HStack {
-                        Image ("Larp3")
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                        
-                        Text("Online Larper")
-                            .font(.title)
-                    }
-                    Text("Owned: \(onlinelarpersowned)")
-                    Button("Buy online larper, cost \(onlinelarperscost)") {
-                        if larps >= onlinelarperscost {
-                            
-                            
-                            onlinelarpersowned += 1
-                            larps -= onlinelarperscost
-                            onlinelarperscost = Int(Double(onlinelarperscost) * 1.5)
-                            larppsgain += 100
-                        }
-                    }
-                    HStack {
-                        Image ("Larp4")
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                        
-                        Text("Professional Larper")
-                            .font(.title)
-                    }
-                    Text("Owned: \(professionalowned)")
-                    Button("Buy prof. larper, cost \(professionalcost)") {
-                        if larps >= professionalcost {
-                            
-                            
-                            professionalowned += 1
-                            larps -= professionalcost
-                            professionalcost = Int(Double(professionalcost) * 1.5)
-                            larppsgain += 500
-                        }
-                    }
-                    HStack {
-                        Image ("Larp5")
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                        
-                        Text("Larp Factory")
-                            .font(.title)
-                    }
-                    Text("Owned: \(factoryowned)")
-                    Button("Buy factory, cost \(factorycost)") {
-                        if larps >= factorycost {
-                            
-                            
-                            factoryowned += 1
-                            larps -= factorycost
-                            factorycost = Int(Double(factorycost) * 1.5)
-                            larppsgain += 2500
-                        }
-                    }
-                    HStack {
-                        Image ("Larp6")
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                        
-                        Text("Central Larp District")
-                            .font(.title)
-                    }
-                    Text("Owned: \(districtowned)")
-                    Button("Buy online larper, cost \(districtcost)") {
-                        if larps >= districtcost {
-                            
-                            
-                            districtowned += 1
-                            larps -= districtcost
-                            districtcost = Int(Double(districtcost) * 1.5)
-                            larppsgain += 10000
-                        }
-                    }
-                    HStack {
-                        Image ("Larp7")
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                        
-                        Text("Stairs Larper")
-                            .font(.title)
-                    }
-                    Text("Owned: \(stairslarpowned)")
-                    Button("Buy online larper, cost \(stairslarpcost)") {
-                        if larps >= stairslarpcost && rebirth >= 1 {
-                            
-                            
-                            stairslarpowned += 1
-                            larps -= stairslarpcost
-                            stairslarpcost = Int(Double(stairslarpcost) * 1.5)
-                            larppsgain += 100000
-                        }
-                    }
-                    HStack {
-                        Image ("Larp8")
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                        
-                        Text("Ultimate Larper")
-                            .font(.title)
-                    }
-                    Text("Owned: \(larpgroupowned)")
-                    Button("Buy online larper, cost \(larpgroupcost)") {
-                        if larps >= larpgroupcost && rebirth >= 3 {
-                            
-                            
-                            larpgroupowned += 1
-                            larps -= larpgroupcost
-                            larpgroupcost = Int(Double(larpgroupcost) * 1.5)
-                            larppsgain += 1000000
-                        }
-                    }
-                    HStack {
-                        Image ("larp9")
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                        
-                        Text("Emperor Larper")
-                            .font(.title)
-                    }
-                    Text("Owned: \(larpwmpowned)")
-                    Button("Buy online larper, cost \(larpwmpcost)") {
-                        if larps >= larpwmpcost && rebirth >= 7 {
-                            
-                            
-                            larpwmpowned += 1
-                            larps -= larpwmpcost
-                            larpwmpcost = Int(Double(larpwmpcost) * 1.5)
-                            larppsgain += 10000000
-                        }
-                    }
-                    HStack {
-                        Image ("Larp10")
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                        
-                        Text("Larp god")
-                            .font(.title)
-                    }
-                    Text("Owned: \(larpgodowned)")
-                    Button("Buy online larper, cost \(larpgodcost)") {
-                        if larps >= larpgodcost && rebirth >= 11 {
-                            
-                            
-                            larpgodowned += 1
-                            larps -= larpgodcost
-                            larpgodcost = Int(Double(larpgodcost) * 1.5)
-                            larppsgain += 1000000000
-                        }
-                    }
-                }
-                }
-                }
+            }
+        }
             
         
             .onReceive(timer) { _ in

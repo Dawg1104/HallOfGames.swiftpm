@@ -16,6 +16,7 @@ struct BlackJack: View {
     @AppStorage("wins") var highestWinStreak = 0
     @AppStorage("wins1") var TotalWins = 0
     @AppStorage("wins2") var WinStreak = 0
+    @State private var Opacity = false
    
     var body: some View {
         ZStack {
@@ -41,6 +42,10 @@ struct BlackJack: View {
                 Text("computer score: \(computerScore)")
                     .font(.system(size: 30, weight: .heavy, design: .monospaced))
                 Text(endGameDisplay)
+                    .font(Font.system(size: 10, weight: .heavy, design: .monospaced))
+                    .frame(width: 100, height: 30)
+                    .background(.yellow)
+                    .opacity(Opacity ? 1 : 0)
                 HStack {
                     Image("deckOfCards")
                         .resizable()
@@ -84,6 +89,7 @@ struct BlackJack: View {
                         playerScore = 0
                         endGameDisplay = "BUST"
                         WinStreak = 0
+                        
                        
             }
                     }
@@ -95,7 +101,8 @@ struct BlackJack: View {
                 .disabled(isDisabled)
                 Button {
                     Task{
-                        computerScore = Int.random(in: 1...21)
+                        Opacity = true
+                        computerScore = Int.random(in: 2...21)
                         if computerScore > playerScore {
                             endGameDisplay = "You lose"
                             WinStreak = 0
@@ -105,11 +112,17 @@ struct BlackJack: View {
                             TotalWins += 1
                             if WinStreak > highestWinStreak {
                                 highestWinStreak = WinStreak
-                            }
+                            } else if computerScore == playerScore {
+                                endGameDisplay = "Push"
+                                
+                             }
                         }
-                        try? await Task.sleep(nanoseconds: 2_000_000_000)
+                        try? await Task.sleep(nanoseconds: 1_000_000_000)
                         computerScore = 0
                         playerScore = 0
+                         cardImage = ""
+                        endGameDisplay = ""
+                        Opacity = false
                     }
                 } label: {
                     Image("BSTAND")

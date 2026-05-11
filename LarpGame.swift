@@ -34,14 +34,14 @@ struct LarpGame: View {
     @AppStorage("LarpFCost") var larpgroupcost: Int = 100000000
     @AppStorage("LarpEmperor") var larpwmpowned: Int = 0
     @AppStorage("LarpEmperorCost") var larpwmpcost: Int = 1000000000
-    
-    
+    @AppStorage("LarpgodCost") var larpgodcost: Int = 10000000000000
+    @AppStorage("LPGO") var larpgodowned: Int = 0
     var body: some View {
         VStack {
             Text("Larp Clicker")
                 .font(.largeTitle)
             Text("Larps: \(larps)")
-            Text("Larps pers second (lps): \(larppsgain)")
+            Text("Larps per second (LPS): \(larppsgain)")
             Text("Rebirths: \(rebirth)")
             HStack {
                 VStack {
@@ -73,6 +73,11 @@ struct LarpGame: View {
                             stairslarpowned = 0
                             larpgroupcost = 10000000
                             larpgroupowned = 0
+                            larpwmpcost = 100000000
+                            larpwmpowned = 0
+                            larpgodcost = 100000000000
+                            larpgodowned = 0
+                            
                         }
                     }
                     
@@ -245,6 +250,25 @@ struct LarpGame: View {
                             larps -= larpwmpcost
                             larpwmpcost = Int(Double(larpwmpcost) * 1.5)
                             larppsgain += 10000000
+                        }
+                    }
+                    HStack {
+                        Image ("Larp10")
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                        
+                        Text("Larp god")
+                            .font(.title)
+                    }
+                    Text("Owned: \(larpwmpowned)")
+                    Button("Buy online larper, cost \(larpwmpcost)") {
+                        if larps >= larpwmpcost && rebirth >= 11 {
+                            
+                            
+                            larpwmpowned += 1
+                            larps -= larpwmpcost
+                            larpwmpcost = Int(Double(larpwmpcost) * 1.5)
+                            larppsgain += 1000000000
                         }
                     }
                 }

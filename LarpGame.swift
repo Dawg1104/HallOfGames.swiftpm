@@ -234,7 +234,7 @@ struct LarpGame: View {
                         }
                     }
                     HStack {
-                        Image ("Larp9")
+                        Image ("larp9")
                             .resizable()
                             .frame(width: 50, height: 50)
                         
@@ -260,14 +260,14 @@ struct LarpGame: View {
                         Text("Larp god")
                             .font(.title)
                     }
-                    Text("Owned: \(larpwmpowned)")
-                    Button("Buy online larper, cost \(larpwmpcost)") {
-                        if larps >= larpwmpcost && rebirth >= 11 {
+                    Text("Owned: \(larpgodowned)")
+                    Button("Buy online larper, cost \(larpgodcost)") {
+                        if larps >= larpgodcost && rebirth >= 11 {
                             
                             
-                            larpwmpowned += 1
-                            larps -= larpwmpcost
-                            larpwmpcost = Int(Double(larpwmpcost) * 1.5)
+                            larpgodowned += 1
+                            larps -= larpgodcost
+                            larpgodcost = Int(Double(larpgodcost) * 1.5)
                             larppsgain += 1000000000
                         }
                     }

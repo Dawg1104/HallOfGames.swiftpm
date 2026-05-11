@@ -106,7 +106,7 @@ struct RNGView: View {
     @AppStorage("chrysalis") var chrysisobtained = false
     
     
-    @State private var showUnlocked = false
+    @AppStorage("rarestAura") var rarestAura = ""
     
     
     let auralist: [weightedRNG] = [
@@ -195,6 +195,11 @@ struct RNGView: View {
         weightedRNG(auraName: "The Monarch of All", chance: 0.00000001),
         weightedRNG(auraName: "Bulgaria", chance: 0.0003)
     ]
+    
+    func auraRank(_ name: String) -> Double {
+        return auralist.first(where: { $0.auraName == name })?.chance ?? 0
+    }
+    
     var body: some View {
         VStack {
             Text("Hall of Games' RNG")
@@ -209,6 +214,11 @@ struct RNGView: View {
                 if let rolled = weightedRoll(auras: auralist) {
                     auraGiven = rolled.auraName
                 }
+                
+                if rarestAura.isEmpty || auraRank(auraGiven) < auraRank(rarestAura) {
+                    rarestAura = auraGiven
+                }
+                
                 rolls += 1
                 
                 
@@ -249,6 +259,9 @@ struct RNGView: View {
                     kingopacity = 0.8
                     Kingisobtained = true
                 }
+                
+                
+                
             }, label: {
                 Text("ROLL")
             })
@@ -285,109 +298,7 @@ struct RNGView: View {
             Text("\(ultimateglobalmessage) \(name), the king")
                 .opacity(monarchopacity)
             
-            
-            /////////////////
-            
-            Button("Show Unlocked Auras") {
-                showUnlocked = true
-            }
-            .sheet(isPresented: $showUnlocked) {
-                VStack {
-                    Text("Auralist")
-                        .font(.title)
-
-                    if commonisobtained { Text("Common") }
-                    if uncommonisobtained { Text("Uncommon") }
-                    if rareisobtained { Text("Rare") }
-                    if epicisobtained { Text("Epic") }
-                    if legendaryisobtained { Text("Legendary") }
-                    if mythicisobtained { Text("Mythical") }
-                    if Insaneisobtained { Text("1ns4n3") }
-                    if Pencilsisobtained { Text("Pencils") }
-                    if lightningisobtained { Text("Lightning") }
-                    if falmeisobtained { Text("Flame") }
-                    if glacierisobtained { Text("Glacier") }
-                    if roseisobtained { Text("Rose") }
-                    if Sharkfinisobtained { Text("Sharkfin") }
-                    if Coloredisobtained { Text("Pencils: Colored") }
-                    if soliceisobtained { Text("Solice") }
-                    if lunisobtained { Text("Lunis") }
-                    if errorisobatined { Text("1ns4n3: 3rr0r") }
-                    if legendarialisobtained { Text("Mythical: Legendarial") }
-                    if windstormisobtained { Text("Windstorm") }
-                    if jackpotisobtained { Text("Jackpot") }
-                    if Hellfireisobtained { Text("Flame: Hellfire") }
-                    if Frostisobtained { Text("Glacier: Frost") }
-                    if historicisobtained { Text("Historic") }
-                    if gravityisobtained { Text("Gravity") }
-                    if greatwhiteisobtained { Text("Sharkfin: Great White") }
-                    if magicalisobtained { Text("Magical") }
-                    if spaceisobtained { Text("Space") }
-                    if hackisobtained { Text("Code") }
-                    if flowerfield { Text("Rose: Flowerfield") }
-                    if olympianisobtained { Text("Olympian") }
-                    if lowtideisobtained { Text("Low Tide") }
-                    if pastisobatined { Text("Historic: Past") }
-                    if planetaryisobtained { Text("Space: Planetary") }
-                    if daybreakisobtained { Text("Solis: Daybreak") }
-                    if nightfallisobtained { Text("Lunis: Nightfall") }
-                    if tornadoisobtained { Text("Windstorm: Tornado") }
-                    if voidedisobtained { Text("Voided") }
-                    if historicpresisobtained { Text("Historic: Present") }
-                    if samurisobtained { Text("Samurai") }
-                    if thunderisobtained { Text("Lightning: Thunderstruck") }
-                    if infernisobtained { Text("Inferno") }
-                    if olympianheroisobtained { Text("Olympian: Hero") }
-                    if angelicisobtained { Text("Angelical") }
-                    if Stellarisobtained { Text("Space: Stellar") }
-                    if hackisobtained { Text("Magical: Archaic") }
-                    if hackedisobtained { Text("Code: Hack3d") }
-                    if justiceisobtained { Text("Justice") }
-                    if RGBisobtained { Text("RGB") }
-                    if evilisobtained { Text("Magical: Evil") }
-                    if futureisobtained { Text("Historic: Future") }
-                    if blackholeisobtained { Text("Space: Black Hole") }
-                    if supercaliisobtained { Text("SuPeRcAlIfRaGiLiStIcExPiAlAdOcIoUs!") }
-                    if Finaleisobtained { Text("Finale") }
-                    if goodhoodisobtained { Text("Olympian: Godhood") }
-                    if darkscaisobtained { Text("Darkscape") }
-                    if titanicisobtained { Text("Glacier: Titanic") }
-                    if huesisobtained { Text("RGB: Hues") }
-                    if tidalwaveisobtained { Text("Tidal Wave") }
-                    if servedisobtained { Text("Justice: Served") }
-                    if tartarsauceisobtained { Text("Tartarus") }
-                    if excalibisobtained { Text("Excalibur") }
-                    if whatifisobtained { Text("Historic: What If?") }
-                    if chrysisobtained { Text("Chrysalis") }
-                    if Frostisobtained { Text("Winter Vacation") }
-                    if infernisobtained { Text("Inferno: Hellsinge") }
-                    if RGBisobtained { Text("RGB: Hex Values") }
-                    if Finaleisobtained { Text("Finale: Last Dance") }
-                    if infernisobtained { Text("Mage of Hell") }
-                    if yharonisobtained { Text("Terrarium") }
-                    if kingopacity > 0 { Text("Emperor") }
-                    if roseisobtained { Text("Blossom") }
-                    if angelicisobtained { Text("Angelical: Fallen Angel") }
-                    if spacegalacticisobtained { Text("Space: Galactic") }
-                    if tsunamiisobtained { Text("Tsunami") }
-                    if yharonisobtained { Text("Terrarium: Jungle Dragon") }
-                    if illumisobtained { Text("Angelical: Illuminated") }
-                    if equiisobtained { Text("Equivalence") }
-                    if Kingisobtained { Text("King of Beasts") }
-                    if pixelisobtained { Text("P1x3lW4v3") }
-                    if nullscapeisobtained { Text("Nullscape") }
-                    if voidheartisobtained { Text("Voidheart") }
-                    if amethystisobtained { Text("Chrysalis: Amethyst") }
-                    if Monarchisobtained { Text("The Monarch of All") }
-
-                    Button("Close") {
-                        showUnlocked = false
-                    }
-                }
-                .padding()
-            }
-
-            //////////////////
+            Text("Rarest Aura Rolled: \(rarestAura)")
             
             }
         }

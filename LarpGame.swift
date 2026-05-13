@@ -8,35 +8,37 @@
 import SwiftUI
 
 struct LarpGame: View {
-    @AppStorage("lps") var larps: Int = 0
-    @AppStorage("alo") var autolarpersowned: Int = 0
-    @AppStorage("lso") var larpsahursowned: Int = 0
-    @AppStorage("alc") var autolarpercost: Int = 10
-    @AppStorage("lps2") var larppsgain: Int = 0
-    @AppStorage("lsc") var larpssahurcost: Int = 100
+    @AppStorage("lps") var larps: Double = 0
+    @AppStorage("alo") var autolarpersowned: Double = 0
+    @AppStorage("lso") var larpsahursowned: Double = 0
+    @AppStorage("alc") var autolarpercost: Double = 10
+    @AppStorage("lps2") var larppsgain: Double = 0
+    @AppStorage("lsc") var larpssahurcost: Double = 100
     let lastOpen = Date()
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    @AppStorage("OLO") var onlinelarpersowned: Int = 0
-    @AppStorage("OLC") var onlinelarperscost: Int = 1000
-    @AppStorage("PLO") var professionalowned: Int = 0
-    @AppStorage("PLC") var professionalcost: Int = 5000
-    @AppStorage("foe") var factoryowned: Int = 0
-    @AppStorage("foc") var factorycost: Int = 25000
-    @AppStorage("CLD") var districtowned: Int = 0
-    @AppStorage("CLC") var districtcost: Int = 100000
-    @AppStorage("LPCL") var clicksperlarp: Int = 1
-    @AppStorage("RBR") var rebirth: Int = 0
-    @AppStorage("RBC") var rebirthcost: Int = 1000000
+    @AppStorage("OLO") var onlinelarpersowned: Double = 0
+    @AppStorage("OLC") var onlinelarperscost: Double = 1000
+    @AppStorage("PLO") var professionalowned: Double = 0
+    @AppStorage("PLC") var professionalcost: Double = 5000
+    @AppStorage("foe") var factoryowned: Double = 0
+    @AppStorage("foc") var factorycost: Double = 25000
+    @AppStorage("CLD") var districtowned: Double = 0
+    @AppStorage("CLC") var districtcost: Double = 100000
+    @AppStorage("LPCL") var clicksperlarp: Double = 1
+    @AppStorage("RBR") var rebirth: Double = 0
+    @AppStorage("RBC") var rebirthcost: Double = 1000000
     @State var showAlert: Bool = false
-    @AppStorage("STAIRSVICTORY") var stairslarpcost: Int = 10000000
-    @AppStorage("StairsVict") var stairslarpowned: Int = 0
-    @AppStorage("LarpF") var larpgroupowned: Int = 0
-    @AppStorage("LarpFCost") var larpgroupcost: Int = 100000000
-    @AppStorage("LarpEmperor") var larpwmpowned: Int = 0
-    @AppStorage("LarpEmperorCost") var larpwmpcost: Int = 1000000000
-    @AppStorage("LarpgodCost") var larpgodcost: Int = 10000000000000
-    @AppStorage("LPGO") var larpgodowned: Int = 0
-    @AppStorage("gamepoints") var gamepoints: Int = 0
+    @AppStorage("STAIRSVICTORY") var stairslarpcost: Double = 10000000
+    @AppStorage("StairsVict") var stairslarpowned: Double = 0
+    @AppStorage("LarpF") var larpgroupowned: Double = 0
+    @AppStorage("LarpFCost") var larpgroupcost: Double = 100000000
+    @AppStorage("LarpEmperor") var larpwmpowned: Double = 0
+    @AppStorage("LarpEmperorCost") var larpwmpcost: Double = 1000000000
+    @AppStorage("LarpgodCost") var larpgodcost: Double = 10000000000000
+    @AppStorage("LPGO") var larpgodowned: Double = 0
+    @AppStorage("gamepoints") var gamepoints: Double = 0
+    @AppStorage("fLO") var finallarperowned: Double = 0
+    @AppStorage("FLC") var finallarpercost: Double = 10000000000000000000
     var body: some View {
         VStack {
             ZStack {
@@ -48,11 +50,11 @@ struct LarpGame: View {
                 VStack {
                     Text("Larp Clicker")
                         .font(.largeTitle)
-                    Text("Larps: \(larps)")
+                    Text("Larps: \(format(larps))")
                         .foregroundStyle(.white)
-                    Text("Larps per second (LPS): \(larppsgain)")
+                    Text("Larps per second (LPS): \(format(larppsgain))")
                         .foregroundStyle(.white)
-                    Text("Rebirths: \(rebirth)")
+                    Text("Rebirths: \(format(rebirth))")
                         .foregroundStyle(.white)
                     HStack {
                         VStack {
@@ -61,11 +63,11 @@ struct LarpGame: View {
                             } label: {
                                 Image("Larp")
                             }
-                            Button("Rebirth: \(rebirthcost)") {
+                            Button("Rebirth: \(format(rebirthcost))") {
                                 if larps >= rebirthcost {
                                     rebirth += 1
-                                    clicksperlarp = Int(Double(clicksperlarp) * 2.0)
-                                    rebirthcost = Int(Double(rebirthcost) * 2.0)
+                                    clicksperlarp = (Double(clicksperlarp) * 2.0)
+                                    rebirthcost = (Double(rebirthcost) * 2.0)
                                     larps = 0
                                     autolarpersowned = 0
                                     larpsahursowned = 0
@@ -88,6 +90,8 @@ struct LarpGame: View {
                                     larpwmpowned = 0
                                     larpgodcost = 100000000000
                                     larpgodowned = 0
+                                    finallarpercost = 10000000000000000
+                                    finallarperowned = 0
                                     
                                 }
                             }
@@ -102,13 +106,13 @@ struct LarpGame: View {
                                     .font(.title)
                                     .foregroundStyle(.white)
                             }
-                            Text("Owned: \(autolarpersowned)")
+                            Text("Owned: \(format(autolarpersowned))")
                                 .foregroundStyle(.white)
-                            Button("Buy Auto-Larper, cost \(autolarpercost)") {
+                            Button("Buy Auto-Larper, cost \(format(autolarpercost))") {
                                 if larps >= autolarpercost {
                                     autolarpersowned += 1
                                     larps -= autolarpercost
-                                    autolarpercost = Int(Double(autolarpercost) * 1.5)
+                                    autolarpercost = (Double(autolarpercost) * 1.5)
                                     larppsgain += 1
                                 }
                             }
@@ -121,15 +125,15 @@ struct LarpGame: View {
                                     .font(.title)
                                     .foregroundStyle(.white)
                             }
-                            Text("Owned: \(larpsahursowned)")
+                            Text("Owned: \(format(larpsahursowned))")
                                 .foregroundStyle(.white)
-                            Button("Buy larp sahur, cost \(larpssahurcost)") {
+                            Button("Buy larp sahur, cost \(format(larpssahurcost))") {
                                 if larps >= larpssahurcost {
                                     
                                     
                                     larpsahursowned += 1
                                     larps -= larpssahurcost
-                                    larpssahurcost = Int(Double(larpssahurcost) * 1.5)
+                                    larpssahurcost = (Double(larpssahurcost) * 1.5)
                                     larppsgain += 10
                                 }
                             }
@@ -143,15 +147,15 @@ struct LarpGame: View {
                                     .font(.title)
                                     .foregroundStyle(.white)
                             }
-                            Text("Owned: \(onlinelarpersowned)")
+                            Text("Owned: \(format(onlinelarpersowned))")
                                 .foregroundStyle(.white)
-                            Button("Buy online larper, cost \(onlinelarperscost)") {
+                            Button("Buy online larper, cost \(format(onlinelarperscost))") {
                                 if larps >= onlinelarperscost {
                                     
                                     
                                     onlinelarpersowned += 1
                                     larps -= onlinelarperscost
-                                    onlinelarperscost = Int(Double(onlinelarperscost) * 1.5)
+                                    onlinelarperscost = (Double(onlinelarperscost) * 1.5)
                                     larppsgain += 100
                                 }
                             }
@@ -164,15 +168,15 @@ struct LarpGame: View {
                                     .font(.title)
                                     .foregroundStyle(.white)
                             }
-                            Text("Owned: \(professionalowned)")
+                            Text("Owned: \(format(professionalowned))")
                                 .foregroundStyle(.white)
-                            Button("Buy prof. larper, cost \(professionalcost)") {
+                            Button("Buy prof. larper, cost \(format(professionalcost))") {
                                 if larps >= professionalcost {
                                     
                                     
                                     professionalowned += 1
                                     larps -= professionalcost
-                                    professionalcost = Int(Double(professionalcost) * 1.5)
+                                    professionalcost = (Double(professionalcost) * 1.5)
                                     larppsgain += 500
                                 }
                             }
@@ -185,15 +189,15 @@ struct LarpGame: View {
                                     .font(.title)
                                     .foregroundStyle(.white)
                             }
-                            Text("Owned: \(factoryowned)")
+                            Text("Owned: \(format(factoryowned))")
                                 .foregroundStyle(.white)
-                            Button("Buy factory, cost \(factorycost)") {
+                            Button("Buy factory, cost \(format(factorycost))") {
                                 if larps >= factorycost {
                                     
                                     
                                     factoryowned += 1
                                     larps -= factorycost
-                                    factorycost = Int(Double(factorycost) * 1.5)
+                                    factorycost = (Double(factorycost) * 1.5)
                                     larppsgain += 2500
                                 }
                             }
@@ -206,15 +210,15 @@ struct LarpGame: View {
                                     .font(.title)
                                     .foregroundStyle(.white)
                             }
-                            Text("Owned: \(districtowned)")
+                            Text("Owned: \(format(districtowned))")
                                 .foregroundStyle(.white)
-                            Button("Buy online larper, cost \(districtcost)") {
+                            Button("Buy central larp district, cost \(format(districtcost))") {
                                 if larps >= districtcost {
                                     
                                     
                                     districtowned += 1
                                     larps -= districtcost
-                                    districtcost = Int(Double(districtcost) * 1.5)
+                                    districtcost = (Double(districtcost) * 1.5)
                                     larppsgain += 10000
                                 }
                             }
@@ -227,15 +231,15 @@ struct LarpGame: View {
                                     .font(.title)
                                     .foregroundStyle(.white)
                             }
-                            Text("Owned: \(stairslarpowned)")
+                            Text("Owned: \(format(stairslarpowned))")
                                 .foregroundStyle(.white)
-                            Button("Buy online larper, cost \(stairslarpcost)") {
+                            Button("Buy stairs larper, cost \(format(stairslarpcost))") {
                                 if larps >= stairslarpcost && rebirth >= 1 {
                                     
                                     
                                     stairslarpowned += 1
                                     larps -= stairslarpcost
-                                    stairslarpcost = Int(Double(stairslarpcost) * 1.5)
+                                    stairslarpcost = (Double(stairslarpcost) * 1.5)
                                     larppsgain += 100000
                                 }
                             }
@@ -248,15 +252,15 @@ struct LarpGame: View {
                                     .font(.title)
                                     .foregroundStyle(.white)
                             }
-                            Text("Owned: \(larpgroupowned)")
+                            Text("Owned: \(format(larpgroupowned))")
                                 .foregroundStyle(.white)
-                            Button("Buy online larper, cost \(larpgroupcost)") {
+                            Button("Buy ultimate larper, cost \(format(larpgroupcost))") {
                                 if larps >= larpgroupcost && rebirth >= 3 {
                                     
                                     
                                     larpgroupowned += 1
                                     larps -= larpgroupcost
-                                    larpgroupcost = Int(Double(larpgroupcost) * 1.5)
+                                    larpgroupcost = (Double(larpgroupcost) * 1.5)
                                     larppsgain += 1000000
                                 }
                             }
@@ -269,15 +273,15 @@ struct LarpGame: View {
                                     .font(.title)
                                     .foregroundStyle(.white)
                             }
-                            Text("Owned: \(larpwmpowned)")
+                            Text("Owned: \(format(larpwmpowned))")
                                 .foregroundStyle(.white)
-                            Button("Buy online larper, cost \(larpwmpcost)") {
+                            Button("Buy larp emperor, cost \(format(larpwmpcost))") {
                                 if larps >= larpwmpcost && rebirth >= 7 {
                                     
                                     
                                     larpwmpowned += 1
                                     larps -= larpwmpcost
-                                    larpwmpcost = Int(Double(larpwmpcost) * 1.5)
+                                    larpwmpcost = (Double(larpwmpcost) * 1.5)
                                     larppsgain += 10000000
                                 }
                             }
@@ -290,16 +294,37 @@ struct LarpGame: View {
                                     .font(.title)
                                     .foregroundStyle(.white)
                             }
-                            Text("Owned: \(larpgodowned)")
+                            Text("Owned: \(format(larpgodowned))")
                                 .foregroundStyle(.white)
-                            Button("Buy online larper, cost \(larpgodcost)") {
+                            Button("Buy larp god, cost \(format(larpgodcost))") {
                                 if larps >= larpgodcost && rebirth >= 15 {
                                     
                                     
                                     larpgodowned += 1
                                     larps -= larpgodcost
-                                    larpgodcost = Int(Double(larpgodcost) * 1.5)
+                                    larpgodcost = (Double(larpgodcost) * 1.5)
                                     larppsgain += 1000000000
+                                }
+                            }
+                            HStack {
+                                Image ("Larp11")
+                                    .resizable()
+                                    .frame(width: 50, height: 50)
+                                
+                                Text("Final Larper")
+                                    .font(.title)
+                                    .foregroundStyle(.white)
+                            }
+                            Text("Owned: \(format(finallarperowned))")
+                                .foregroundStyle(.white)
+                            Button("Buy final larper, cost \(format(finallarpercost))") {
+                                if larps >= finallarpercost && rebirth >= 32 {
+                                    
+                                    
+                                    finallarperowned += 1
+                                    larps -= finallarpercost
+                                    finallarpercost = (Double(larpgodcost) * 1.5)
+                                    larppsgain += 100000000000000000
                                 }
                             }
                         }
@@ -317,11 +342,25 @@ struct LarpGame: View {
     
     
 
-func format(_ num: Int) -> String {
-    if num >= 1_000_000 {
-        return "\(num / 1_000_000)M"
+func format(_ num: Double) -> String {
+    let formatter = NumberFormatter()
+    formatter.maximumFractionDigits = 2
+    formatter.minimumFractionDigits = 0
+    formatter.numberStyle = .decimal
+    if num >= 1_000_000_000_000_000_000_000 {
+      return "\(formatter.string(from: NSNumber(value: num / 1_000_000_000_000_000_000_000)) ?? "0")SX"
+    } else if num >= 1_000_000_000_000_000_000 {
+      return "\(formatter.string(from: NSNumber(value: num / 1_000_000_000_000_000_000)) ?? "0")QI"
+    } else if num >= 1_000_000_000_000_000 {
+      return "\(formatter.string(from: NSNumber(value: num / 1_000_000_000_000_000)) ?? "0")QD"
+    } else if num >= 1_000_000_000_000 {
+    return "\(formatter.string(from: NSNumber(value: num / 1_000_000_000_000)) ?? "0")T"
+    } else if num >= 1_000_000_000 {
+        return "\(formatter.string(from: NSNumber(value: num / 1_000_000_000)) ?? "0")B"
+    } else if num >= 1_000_000 {
+        return "\(formatter.string(from: NSNumber(value: num / 1_000_000)) ?? "0")M"
     } else if num >= 1_000 {
-        return "\(num / 1_000)K"
+        return "\(formatter.string(from: NSNumber(value: num / 1_000)) ?? "0")K"
     }
-    return "\(num)"
+    return formatter.string(from: NSNumber(value: num)) ?? "0"
 }

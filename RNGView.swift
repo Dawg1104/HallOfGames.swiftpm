@@ -105,9 +105,8 @@ struct RNGView: View {
     @AppStorage("What If?") var whatifisobtained = false
     @AppStorage("chrysalis") var chrysisobtained = false
     
-    
     @AppStorage("rarestAura") var rarestAura = ""
-    
+    @AppStorage("LuckRNG") var luck: Double = 1.0
     
     let auralist: [weightedRNG] = [
         weightedRNG(auraName: "Common", chance: 40.0),
@@ -196,9 +195,21 @@ struct RNGView: View {
         weightedRNG(auraName: "Bulgaria", chance: 0.0003)
     ]
     
-    func auraRank(_ name: String) -> Double {
-        return auralist.first(where: { $0.auraName == name })?.chance ?? 0
+    
+    func adjustedList() -> [weightedRNG] {
+        auralist.map { aura in
+            weightedRNG(
+                auraName: aura.auraName,
+                chance: aura.chance / luck
+            )
+        }
     }
+    
+    
+    func auraRank(_ name: String) -> Double {
+        auralist.first(where: { $0.auraName == name })?.chance ?? 0
+    }
+    
     
     var body: some View {
         VStack {
@@ -207,19 +218,29 @@ struct RNGView: View {
             TextField("Enter Your Name", text: $name)
                 .textFieldStyle(.roundedBorder)
                 .frame(width: 300)
-            Text("Luck x1")
+            Text("Luck x\(luck)")
             Text("Rolls: \(rolls)")
                 .padding()
             Button(action: {
-                if let rolled = weightedRoll(auras: auralist) {
+                
+                if let rolled = weightedRoll(auras: adjustedList()) {
                     auraGiven = rolled.auraName
                 }
+                
+                rolls += 1
+                
+                if auraGiven == "1ns4n3" ||
+                    auraRank(auraGiven) <= 0.0001 {
+                    
+                    luck += 0.5
+                }
+                
                 
                 if rarestAura.isEmpty || auraRank(auraGiven) < auraRank(rarestAura) {
                     rarestAura = auraGiven
                 }
                 
-                rolls += 1
+                
                 
                 
                 
@@ -300,14 +321,14 @@ struct RNGView: View {
             
             Text("Rarest Aura Rolled: \(rarestAura)")
             
-            }
         }
     }
-    func plswork() {
-        let plswork = true
-        
-    }
+}
+func plswork() {
+    let plswork = true
+    
+}
 
-    
-    
-    
+
+
+

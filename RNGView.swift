@@ -106,7 +106,7 @@ struct RNGView: View {
     @AppStorage("chrysalis") var chrysisobtained = false
     
     
-    
+    @AppStorage("rarestAura") var rarestAura = ""
     
     
     let auralist: [weightedRNG] = [
@@ -193,8 +193,13 @@ struct RNGView: View {
         weightedRNG(auraName: "Voidheart", chance: 0.0000000166),
         weightedRNG(auraName: "Chrysalis: Amethyst", chance: 0.0000000125),
         weightedRNG(auraName: "The Monarch of All", chance: 0.00000001),
-        weightedRNG(auraName: "Bulgaria", chance: 0.000003)
+        weightedRNG(auraName: "Bulgaria", chance: 0.0003)
     ]
+    
+    func auraRank(_ name: String) -> Double {
+        return auralist.first(where: { $0.auraName == name })?.chance ?? 0
+    }
+    
     var body: some View {
         VStack {
             Text("Hall of Games' RNG")
@@ -209,6 +214,11 @@ struct RNGView: View {
                 if let rolled = weightedRoll(auras: auralist) {
                     auraGiven = rolled.auraName
                 }
+                
+                if rarestAura.isEmpty || auraRank(auraGiven) < auraRank(rarestAura) {
+                    rarestAura = auraGiven
+                }
+                
                 rolls += 1
                 
                 
@@ -245,10 +255,13 @@ struct RNGView: View {
                 } else if auraGiven == "Angelical: Illuminated" {
                     illumopacity = 0.8
                     illumisobtained = true
-                } else if auraGiven == "King Of Beasts" {
+                } else if auraGiven == "King of Beasts" {
                     kingopacity = 0.8
                     Kingisobtained = true
                 }
+                
+                
+                
             }, label: {
                 Text("ROLL")
             })
@@ -285,9 +298,8 @@ struct RNGView: View {
             Text("\(ultimateglobalmessage) \(name), the king")
                 .opacity(monarchopacity)
             
+            Text("Rarest Aura Rolled: \(rarestAura)")
             
-                            
-                
             }
         }
     }

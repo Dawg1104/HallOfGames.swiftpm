@@ -43,7 +43,7 @@ struct FNAJAView: View {
                     jobscare2 = Int.random(in: 1...9)
                     jobscare3 = Int.random(in: 1...9)
                     jobscare4 = Int.random(in: 1...9)
-                    if jobscare == 1 || jobscare2 == 9 || jobscare3 == 8 || jobscare4 == 7 || nightSystem == 6 {
+                    if jobscare == 1 && jobscare2 == 9 && jobscare3 == 8 && jobscare4 == 7 && nightSystem == 6 {
                         showjumpscare1987 = true
                         show1987Flash = true
                         scale = 34.0

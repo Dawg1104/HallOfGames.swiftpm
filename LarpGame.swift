@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct LarpGame: View {
+    @Environment(\.scenePhase) private var scenePhase
     @AppStorage("lps") var larps: Double = 0
     @AppStorage("alo") var autolarpersowned: Double = 0
     @AppStorage("lso") var larpsahursowned: Double = 0
     @AppStorage("alc") var autolarpercost: Double = 10
     @AppStorage("lps2") var larppsgain: Double = 0
     @AppStorage("lsc") var larpssahurcost: Double = 100
-    let lastOpen = Date()
+    
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @AppStorage("OLO") var onlinelarpersowned: Double = 0
     @AppStorage("OLC") var onlinelarperscost: Double = 1000
@@ -39,7 +40,23 @@ struct LarpGame: View {
     @AppStorage("gamepoints") var gamepoints: Double = 0
     @AppStorage("fLO") var finallarperowned: Double = 0
     @AppStorage("FLC") var finallarpercost: Double = 10000000000000000000
+    @AppStorage("lastClosedTime") var lastClosedTime: Double = Date().timeIntervalSince1970
+    @State private var offlineLarps: Double = 0
+    @State private var showOfflineAlert = false
+    func calculateOfflineEarnings() {
+        let now = Date().timeIntervalSince1970
+        let secondsAway = now - lastClosedTime
+        
+        if secondsAway > 0 {
+            offlineLarps = larppsgain * secondsAway
+            larps += offlineLarps
+            showOfflineAlert = true
+        }
+        
+        lastClosedTime = now
+    }
     var body: some View {
+        
         VStack {
             ZStack {
                 
@@ -92,6 +109,7 @@ struct LarpGame: View {
                                     larpgodowned = 0
                                     finallarpercost = 10000000000000000
                                     finallarperowned = 0
+                                    lastClosedTime = Date().timeIntervalSince1970
                                     
                                 }
                             }
@@ -323,7 +341,7 @@ struct LarpGame: View {
                                     
                                     finallarperowned += 1
                                     larps -= finallarpercost
-                                    finallarpercost = (Double(larpgodcost) * 1.5)
+                                    finallarpercost = (Double(finallarpercost) * 1.5)
                                     larppsgain += 100000000000000000
                                 }
                             }
@@ -331,36 +349,50 @@ struct LarpGame: View {
                     }
                 }
             }
-        }
             
-        
             .onReceive(timer) { _ in
-                larps += larppsgain}
+                larps += larppsgain
+            }
+            .onAppear {
+                calculateOfflineEarnings()
+            }
+            .onChange(of: scenePhase) { newPhase in
+                if newPhase == .background {
+                    lastClosedTime = Date().timeIntervalSince1970
+                }
+            }
+            .alert("Offline Earnings", isPresented: $showOfflineAlert) {
+                Button("Nice") { }
+            } message: {
+                Text("Your larpers generated \(format(offlineLarps)) larps while you were away.")
+            }
             
         }
-}
-    
-    
-
-func format(_ num: Double) -> String {
-    let formatter = NumberFormatter()
-    formatter.maximumFractionDigits = 2
-    formatter.minimumFractionDigits = 0
-    formatter.numberStyle = .decimal
-    if num >= 1_000_000_000_000_000_000_000 {
-      return "\(formatter.string(from: NSNumber(value: num / 1_000_000_000_000_000_000_000)) ?? "0")SX"
-    } else if num >= 1_000_000_000_000_000_000 {
-      return "\(formatter.string(from: NSNumber(value: num / 1_000_000_000_000_000_000)) ?? "0")QI"
-    } else if num >= 1_000_000_000_000_000 {
-      return "\(formatter.string(from: NSNumber(value: num / 1_000_000_000_000_000)) ?? "0")QD"
-    } else if num >= 1_000_000_000_000 {
-    return "\(formatter.string(from: NSNumber(value: num / 1_000_000_000_000)) ?? "0")T"
-    } else if num >= 1_000_000_000 {
-        return "\(formatter.string(from: NSNumber(value: num / 1_000_000_000)) ?? "0")B"
-    } else if num >= 1_000_000 {
-        return "\(formatter.string(from: NSNumber(value: num / 1_000_000)) ?? "0")M"
-    } else if num >= 1_000 {
-        return "\(formatter.string(from: NSNumber(value: num / 1_000)) ?? "0")K"
     }
-    return formatter.string(from: NSNumber(value: num)) ?? "0"
 }
+        
+        func format(_ num: Double) -> String {
+            let formatter = NumberFormatter()
+            formatter.maximumFractionDigits = 2
+            formatter.minimumFractionDigits = 0
+            formatter.numberStyle = .decimal
+            if num >= 1_000_000_000_000_000_000_000 {
+                return "\(formatter.string(from: NSNumber(value: num / 1_000_000_000_000_000_000_000)) ?? "0")SX"
+            } else if num >= 1_000_000_000_000_000_000 {
+                return "\(formatter.string(from: NSNumber(value: num / 1_000_000_000_000_000_000)) ?? "0")QI"
+            } else if num >= 1_000_000_000_000_000 {
+                return "\(formatter.string(from: NSNumber(value: num / 1_000_000_000_000_000)) ?? "0")QD"
+            } else if num >= 1_000_000_000_000 {
+                return "\(formatter.string(from: NSNumber(value: num / 1_000_000_000_000)) ?? "0")T"
+            } else if num >= 1_000_000_000 {
+                return "\(formatter.string(from: NSNumber(value: num / 1_000_000_000)) ?? "0")B"
+            } else if num >= 1_000_000 {
+                return "\(formatter.string(from: NSNumber(value: num / 1_000_000)) ?? "0")M"
+            } else if num >= 1_000 {
+                return "\(formatter.string(from: NSNumber(value: num / 1_000)) ?? "0")K"
+            }
+            return formatter.string(from: NSNumber(value: num)) ?? "0"
+        }
+        
+ 
+

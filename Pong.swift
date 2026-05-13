@@ -93,6 +93,7 @@ class GameScene: SKScene, @MainActor SKPhysicsContactDelegate {
     
     
     
+    
     func didBegin(_ contact: SKPhysicsContact) {
         if contact.bodyA.node?.name == "Bottom" {
             ball.removeFromParent()

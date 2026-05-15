@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct Menu: View {
+    @State var text = ""
     var body: some View {
         
         ZStack {
@@ -19,7 +20,7 @@ struct Menu: View {
             
             ScrollView {
                 VStack(spacing: 20) {
-                    
+                  Text(text)
                     NavigationLink(destination: BlackJack()) {
                         Text("Blackjack")
                             .padding()
@@ -27,6 +28,9 @@ struct Menu: View {
                             .background(Color.orange)
                             .foregroundColor(.white)
                             .clipShape(Capsule())
+                    }
+                    .onHover {_ in 
+                        text = "A fun Casino game, where the dealer and the player compete for the best hand"
                     }
                     
                     NavigationLink(destination: FNAJAView()) {
@@ -37,6 +41,9 @@ struct Menu: View {
                             .foregroundColor(.white)
                             .clipShape(Capsule())
                     }
+                    .onHover {_ in
+                        text = "A game based off of the orignal horror game FNAF, but with Job applications"
+                    }
                     
                     NavigationLink(destination: JumpyBird()) {
                         Text("JumpyBird")
@@ -45,6 +52,9 @@ struct Menu: View {
                             .background(Color.orange)
                             .foregroundColor(.white)
                             .clipShape(Capsule())
+                    }
+                    .onHover {_ in
+                        text = "not much to say, pretty much just flappy bird rebranded"
                     }
                     
                     NavigationLink(destination: PongView()) {
@@ -55,7 +65,9 @@ struct Menu: View {
                             .foregroundColor(.white)
                             .clipShape(Capsule())
                     }
-                    
+                    .onHover {_ in
+                        text = "Pong"
+                    }
                     NavigationLink(destination: PopTheLock()) {
                         Text("PopTheLock")
                             .padding()
@@ -64,7 +76,9 @@ struct Menu: View {
                             .foregroundColor(.white)
                             .clipShape(Capsule())
                     }
-                    
+                    .onHover {_ in
+                        text = "A fun skill based game, you can play with yourself or one other"
+                    }
                     NavigationLink(destination: RNGView()) {
                         Text("RNG")
                             .padding()
@@ -72,6 +86,9 @@ struct Menu: View {
                             .background(Color.orange)
                             .foregroundColor(.white)
                             .clipShape(Capsule())
+                    }
+                    .onHover {_ in
+                        text = "an RNG game with lots of things to unlock and explore"
                     }
                     
                     NavigationLink(destination: RouletteView()) {
@@ -82,7 +99,9 @@ struct Menu: View {
                             .foregroundColor(.white)
                             .clipShape(Capsule())
                     }
-                    
+                    .onHover {_ in
+                        text = "similar to Black Jack this is a casino based game, where you make a prediction and roll the wheel"
+                    }
                     NavigationLink(destination: WarView()) {
                         Text("War")
                             .padding()
@@ -91,6 +110,9 @@ struct Menu: View {
                             .foregroundColor(.white)
                             .clipShape(Capsule())
                     }
+                    .onHover {_ in
+                        text = "A fun card game that you play against the dealer, you have probably heard of this game before"
+                    }
                     NavigationLink(destination: LarpGame()) {
                         Text("Clicker")
                             .padding()
@@ -98,7 +120,9 @@ struct Menu: View {
                             .background(Color.orange)
                             .foregroundColor(.white)
                             .clipShape(Capsule())
-                        
+                            .onHover {_ in 
+                                text = "*sigh* dont even ask"
+                            }
                     }
                 }
             }

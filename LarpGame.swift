@@ -251,7 +251,7 @@ struct LarpGame: View {
                             }
                             Text("Owned: \(format(stairslarpowned))")
                                 .foregroundStyle(.white)
-                            Button("Buy stairs larper, cost \(format(stairslarpcost))") {
+                            Button("Buy stairs larper, cost \(format(stairslarpcost)), 1 rebirth needed") {
                                 if larps >= stairslarpcost && rebirth >= 1 {
                                     
                                     
@@ -272,7 +272,7 @@ struct LarpGame: View {
                             }
                             Text("Owned: \(format(larpgroupowned))")
                                 .foregroundStyle(.white)
-                            Button("Buy ultimate larper, cost \(format(larpgroupcost))") {
+                            Button("Buy ultimate larper, cost \(format(larpgroupcost)), 3 rebirths needed") {
                                 if larps >= larpgroupcost && rebirth >= 3 {
                                     
                                     
@@ -293,7 +293,7 @@ struct LarpGame: View {
                             }
                             Text("Owned: \(format(larpwmpowned))")
                                 .foregroundStyle(.white)
-                            Button("Buy larp emperor, cost \(format(larpwmpcost))") {
+                            Button("Buy larp emperor, cost \(format(larpwmpcost)), 7 rebirths needed") {
                                 if larps >= larpwmpcost && rebirth >= 7 {
                                     
                                     
@@ -314,7 +314,7 @@ struct LarpGame: View {
                             }
                             Text("Owned: \(format(larpgodowned))")
                                 .foregroundStyle(.white)
-                            Button("Buy larp god, cost \(format(larpgodcost))") {
+                            Button("Buy larp god, cost \(format(larpgodcost)), 15 rebirths needed") {
                                 if larps >= larpgodcost && rebirth >= 15 {
                                     
                                     
@@ -335,7 +335,7 @@ struct LarpGame: View {
                             }
                             Text("Owned: \(format(finallarperowned))")
                                 .foregroundStyle(.white)
-                            Button("Buy final larper, cost \(format(finallarpercost))") {
+                            Button("Buy final larper, cost \(format(finallarpercost)), 32 rebirths needed") {
                                 if larps >= finallarpercost && rebirth >= 32 {
                                     
                                     

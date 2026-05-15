@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct Menu: View {
+    @AppStorage("gamepoints") var gamepoints: Int = 0
     var body: some View {
         
         ZStack {
@@ -16,89 +17,94 @@ struct Menu: View {
                 .scaledToFill()
                 .ignoresSafeArea()
             
-            
-            ScrollView {
-                VStack(spacing: 20) {
-                    
-                    NavigationLink(destination: BlackJack()) {
-                        Text("Blackjack")
-                            .padding()
-                            .frame(maxWidth: 150, maxHeight: 60)
-                            .background(Color.orange)
-                            .foregroundColor(.white)
-                            .clipShape(Capsule())
-                    }
-                    
-                    NavigationLink(destination: FNAJAView()) {
-                        Text("FNAJA")
-                            .padding()
-                            .frame(maxWidth: 150, maxHeight: 60)
-                            .background(Color.orange)
-                            .foregroundColor(.white)
-                            .clipShape(Capsule())
-                    }
-                    
-                    NavigationLink(destination: JumpyBird()) {
-                        Text("JumpyBird")
-                            .padding()
-                            .frame(maxWidth: 150, maxHeight: 60)
-                            .background(Color.orange)
-                            .foregroundColor(.white)
-                            .clipShape(Capsule())
-                    }
-                    
-                    NavigationLink(destination: PongView()) {
-                        Text("Pong")
-                            .padding()
-                            .frame(maxWidth: 150, maxHeight: 60)
-                            .background(Color.orange)
-                            .foregroundColor(.white)
-                            .clipShape(Capsule())
-                    }
-                    
-                    NavigationLink(destination: PopTheLock()) {
-                        Text("PopTheLock")
-                            .padding()
-                            .frame(maxWidth: 150, maxHeight: 60)
-                            .background(Color.orange)
-                            .foregroundColor(.white)
-                            .clipShape(Capsule())
-                    }
-                    
-                    NavigationLink(destination: RNGView()) {
-                        Text("RNG")
-                            .padding()
-                            .frame(maxWidth: 150, maxHeight: 60)
-                            .background(Color.orange)
-                            .foregroundColor(.white)
-                            .clipShape(Capsule())
-                    }
-                    
-                    NavigationLink(destination: RouletteView()) {
-                        Text("Roulette")
-                            .padding()
-                            .frame(maxWidth: 150, maxHeight: 60)
-                            .background(Color.orange)
-                            .foregroundColor(.white)
-                            .clipShape(Capsule())
-                    }
-                    
-                    NavigationLink(destination: WarView()) {
-                        Text("War")
-                            .padding()
-                            .frame(maxWidth: 150, maxHeight: 60)
-                            .background(Color.orange)
-                            .foregroundColor(.white)
-                            .clipShape(Capsule())
-                    }
-                    NavigationLink(destination: LarpGame()) {
-                        Text("Clicker")
-                            .padding()
-                            .frame(maxWidth: 150, maxHeight: 60)
-                            .background(Color.orange)
-                            .foregroundColor(.white)
-                            .clipShape(Capsule())
+            VStack {
+                HStack {
+                  Image("Gampoints")
+                    Text("\(gamepoints)")
+                }
+                ScrollView {
+                    VStack(spacing: 20) {
                         
+                        NavigationLink(destination: BlackJack()) {
+                            Text("Blackjack")
+                                .padding()
+                                .frame(maxWidth: 150, maxHeight: 60)
+                                .background(Color.orange)
+                                .foregroundColor(.white)
+                                .clipShape(Capsule())
+                        }
+                        
+                        NavigationLink(destination: FNAJAView()) {
+                            Text("FNAJA")
+                                .padding()
+                                .frame(maxWidth: 150, maxHeight: 60)
+                                .background(Color.orange)
+                                .foregroundColor(.white)
+                                .clipShape(Capsule())
+                        }
+                        
+                        NavigationLink(destination: JumpyBird()) {
+                            Text("JumpyBird")
+                                .padding()
+                                .frame(maxWidth: 150, maxHeight: 60)
+                                .background(Color.orange)
+                                .foregroundColor(.white)
+                                .clipShape(Capsule())
+                        }
+                        
+                        NavigationLink(destination: PongView()) {
+                            Text("Pong")
+                                .padding()
+                                .frame(maxWidth: 150, maxHeight: 60)
+                                .background(Color.orange)
+                                .foregroundColor(.white)
+                                .clipShape(Capsule())
+                        }
+                        
+                        NavigationLink(destination: PopTheLock()) {
+                            Text("PopTheLock")
+                                .padding()
+                                .frame(maxWidth: 150, maxHeight: 60)
+                                .background(Color.orange)
+                                .foregroundColor(.white)
+                                .clipShape(Capsule())
+                        }
+                        
+                        NavigationLink(destination: RNGView()) {
+                            Text("RNG")
+                                .padding()
+                                .frame(maxWidth: 150, maxHeight: 60)
+                                .background(Color.orange)
+                                .foregroundColor(.white)
+                                .clipShape(Capsule())
+                        }
+                        
+                        NavigationLink(destination: RouletteView()) {
+                            Text("Roulette")
+                                .padding()
+                                .frame(maxWidth: 150, maxHeight: 60)
+                                .background(Color.orange)
+                                .foregroundColor(.white)
+                                .clipShape(Capsule())
+                        }
+                        
+                        NavigationLink(destination: WarView()) {
+                            Text("War")
+                                .padding()
+                                .frame(maxWidth: 150, maxHeight: 60)
+                                .background(Color.orange)
+                                .foregroundColor(.white)
+                                .clipShape(Capsule())
+                        }
+                        NavigationLink(destination: LarpGame()) {
+                            Text("Clicker")
+                                .padding()
+                                .frame(maxWidth: 150, maxHeight: 60)
+                                .background(Color.orange)
+                                .foregroundColor(.white)
+                                .clipShape(Capsule())
+                            
+                        }
                     }
                 }
             }

@@ -67,6 +67,7 @@ struct LarpGame: View {
                 VStack {
                     Text("Larp Clicker")
                         .font(.largeTitle)
+                        .foregroundStyle(.white)
                     Text("Larps: \(format(larps))")
                         .foregroundStyle(.white)
                     Text("Larps per second (LPS): \(format(larppsgain))")

@@ -1,20 +1,71 @@
 import SwiftUI
 
+
+
 struct PopTheLock: View {
     @AppStorage("gamepoints") var gamePoints = 0
     @AppStorage("highScore") var highScore: Int = 0
+    @AppStorage("themeChoice") var themeChoice: Int = .random(in: 0...1)
+    // 0 -- Blue
+    // 1 -- Green
     @State var score = 0
     @State var loseScore = 0
     @State private var didLose = false
+
+    @State var themeColor: Color
+    @State var pickColor: Color
+    @State var areaColor: Color
+    @State var ringColor: Color
+    @State var innerCircleColor: Color
+
+    init() {
+        // Initialize state wrappers with safe defaults, then apply stored theme
+        _themeColor = State(initialValue: .blue)
+        _pickColor = State(initialValue: .red)
+        _areaColor = State(initialValue: .yellow)
+        _ringColor = State(initialValue: .cyan)
+        _innerCircleColor = State(initialValue: .blue.opacity(0.5))
+
+        let choice = UserDefaults.standard.integer(forKey: "themeChoice")
+        applyTheme(choice)
+    }
+
+    private func applyTheme(_ choice: Int) {
+        switch choice {
+        case 1: // Green theme
+            themeColor = .green
+            pickColor = .white
+            areaColor = .yellow
+            ringColor = Color(red: 0.0, green: 0.6, blue: 0.0)
+            innerCircleColor = Color(red: 0.0, green: 0.6, blue: 0.4)
+        default: // Blue theme
+            themeColor = .blue
+            pickColor = .red
+            areaColor = .yellow
+            ringColor = .cyan
+            innerCircleColor = .blue
+        }
+    }
+
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.blue.ignoresSafeArea()
+                themeColor.ignoresSafeArea()
                 VStack {
                     Text("Score: \(score)")
                         .font(.largeTitle)
-                    Lock(score: $score, highScore: $highScore, didLose: $didLose, loseScore:  $loseScore)
-                    
+                    Lock(
+                        score: $score,
+                        highScore: $highScore,
+                        didLose: $didLose,
+                        loseScore:  $loseScore,
+                        themeColor: themeColor,
+                        pickColor: pickColor,
+                        areaColor: areaColor,
+                        ringColor: ringColor,
+                        innerCircleColor: innerCircleColor
+                    )
+
                     NavigationLink {
                         PopTheLockVersus()
                     } label: {
@@ -26,11 +77,16 @@ struct PopTheLock: View {
                         }
                     }
                 }
-                if (didLose) {
+                if didLose {
                     PopTheLockLose(score: loseScore, versus: false, highScore: highScore, loss: $didLose)
                         .ignoresSafeArea()
                 }
             }
+        }
+        .onAppear {
+            let random = Int.random(in: 0...2)
+            themeChoice = random
+            applyTheme(random)
         }
     }
 }
@@ -41,6 +97,11 @@ struct Lock: View {
     @Binding var highScore : Int
     @Binding var didLose: Bool
     @Binding var loseScore: Int
+    let themeColor: Color
+    let pickColor: Color
+    let areaColor: Color
+    let ringColor: Color
+    let innerCircleColor: Color
     @State private var time: Double = 0.0
     @State private var timeChangeValue: Double = 0.005
     let timer = Timer.publish(every: 0.016, on: .main, in: .common).autoconnect()
@@ -59,23 +120,23 @@ struct Lock: View {
             
             ZStack {
                 Circle()
-                    .foregroundStyle(.cyan)
+                    .foregroundStyle(ringColor)
                     .padding(outerPadding)
                 
                 Circle()
-                    .foregroundStyle(.yellow)
+                    .foregroundStyle(areaColor)
                     .frame(width: targetDiameter, height: targetDiameter)
                     .offset(calculateOffsetEffect(t: targetT, radius: orbitRadius))
                 
                 Circle()
-                    .foregroundStyle(.blue)
+                    .foregroundStyle(innerCircleColor)
                     .padding(outerPadding + ringThickness)
                 
                 Capsule()
                     .frame(width: pickerWidth, height: pickerHeight)
                     .rotationEffect(calculateRotationEffect(time: time))
                     .offset(calculateOffsetEffect(t: time, radius: orbitRadius))
-                    .foregroundStyle(.red)
+                    .foregroundStyle(pickColor)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
@@ -142,11 +203,6 @@ struct Lock: View {
 func generateRandomPos() -> ClosedRange<Double> {
     0.0001...1.0
 }
-
-#Preview {
-    PopTheLock()
-}
-
 
 struct PopTheLockLose: View {
     @AppStorage("shouldRestart") var shouldRestart = false
@@ -215,3 +271,6 @@ struct PopTheLockWin: View {
         }
     }
 }
+
+
+

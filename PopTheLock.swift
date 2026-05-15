@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct PopTheLock: View {
+    @AppStorage("gamepoints") var gamePoints = 0
     @AppStorage("highScore") var highScore: Int = 0
     @State var score = 0
     @State var loseScore = 0
@@ -86,13 +87,13 @@ struct Lock: View {
         }
         .onChange(of: shouldRestart) { newValue in
             if newValue {
+                // Reset for a new round
                 targetT = .random(in: generateRandomPos())
-                shouldRestart = false
                 time = .random(in: 0.0...1.0)
                 timeChangeValue = 0.005
-                highScore = max(score, highScore)
-                loseScore = score
-                didLose = true
+                score = 0
+                didLose = false
+                shouldRestart = false
             }
         }
     }
@@ -100,7 +101,7 @@ struct Lock: View {
     private func checkCollision() {
         let normalizedTime = time.truncatingRemainder(dividingBy: 1.0)
         let diff = abs(normalizedTime - targetT)
-        
+
         if diff < 0.04 || diff > 0.96 {
             self.targetT = .random(in: generateRandomPos())
             score += 1
@@ -113,7 +114,11 @@ struct Lock: View {
             }
             timeChangeValue *= -1
         } else {
-            shouldRestart = true
+            // Player missed: record loss and show overlay
+            highScore = max(score, highScore)
+            loseScore = score
+            didLose = true
+            shouldRestart = false
         }
     }
     

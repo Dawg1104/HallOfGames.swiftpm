@@ -91,6 +91,9 @@ class GameScene: SKScene, @MainActor SKPhysicsContactDelegate {
         computer.run(SKAction.moveTo(x: ball.position.x, duration: 0.1))
     }
     
+    
+    
+    
     func didBegin(_ contact: SKPhysicsContact) {
         if contact.bodyA.node?.name == "Bottom" {
             ball.removeFromParent()
@@ -112,6 +115,11 @@ struct PongView: View {
         GeometryReader(content: { geometry in
             SpriteView(scene: GameScene(size: geometry.size))
         })
+        
+        
+        
     }
+    
+    
 }
 

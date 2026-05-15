@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct PopTheLock: View {
+    @AppStorage("gamepoints") var gamePoints = 0
     @AppStorage("highScore") var highScore: Int = 0
     @State var score = 0
     @State var loseScore = 0

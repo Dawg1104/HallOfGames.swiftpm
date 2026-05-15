@@ -198,9 +198,20 @@ struct RNGView: View {
     
     func adjustedList() -> [weightedRNG] {
         auralist.map { aura in
-            weightedRNG(
+            
+            var newChance = aura.chance
+            
+            if aura.auraName == "Common" {
+                newChance = aura.chance / (1 + luck * 1.5)
+            } else if aura.chance < 0.001 {
+                newChance = aura.chance * (1 + luck * 1.2)
+            } else {
+                newChance = aura.chance * (1 + luck * 0.3)
+            }
+            
+            return weightedRNG(
                 auraName: aura.auraName,
-                chance: aura.chance / luck
+                chance: newChance
             )
         }
     }
@@ -229,7 +240,7 @@ struct RNGView: View {
                 
                 rolls += 1
                 
-                if auraGiven == "1ns4n3" ||
+                if auraGiven == "Mythical" ||
                     auraRank(auraGiven) <= 0.0001 {
                     
                     luck += 0.5
@@ -239,9 +250,6 @@ struct RNGView: View {
                 if rarestAura.isEmpty || auraRank(auraGiven) < auraRank(rarestAura) {
                     rarestAura = auraGiven
                 }
-                
-                
-                
                 
                 
                 

@@ -13,7 +13,8 @@ struct PopTheLockVersus: View {
         ZStack {
             Color.blue.ignoresSafeArea()
             VStack {
-                Lock(score: $scorePlayerOne, highScore: $highScore, didLose: $didLosePlayerOne, loseScore: $loseScorePlayerOne)
+                Lock(score: $scorePlayerOne, highScore: $highScore, didLose: $didLosePlayerOne, loseScore: $loseScorePlayerOne, themeColor: .blue,
+                     pickColor: .red, areaColor: .yellow, ringColor: .cyan, innerCircleColor: .blue)
                 Text("Score: \(scorePlayerOne)")
                     .font(.largeTitle)
                     .rotationEffect(.degrees(180))
@@ -25,7 +26,8 @@ struct PopTheLockVersus: View {
                 Text("Score: \(scorePlayerTwo)")
                     .font(.largeTitle)
                 
-                Lock(score: $scorePlayerTwo, highScore: $highScore, didLose: $didLosePlayerTwo, loseScore: $loseScorePlayerTwo)
+                Lock(score: $scorePlayerTwo, highScore: $highScore, didLose: $didLosePlayerTwo, loseScore: $loseScorePlayerTwo, themeColor: .blue,
+                     pickColor: .red, areaColor: .yellow, ringColor: .cyan, innerCircleColor: .blue)
                 
             }
             VStack {

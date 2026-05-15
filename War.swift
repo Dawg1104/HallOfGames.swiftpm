@@ -15,15 +15,33 @@ struct WarView: View {
     @State var number = 0
     @State var EndText = ""
     @State var gameText = ""
+    @AppStorage("wins") var highestWinStreak = 0
+    @AppStorage("wins1") var TotalWins = 0
+    @AppStorage("wins2") var WinStreak = 0
     var body: some View {
         ZStack {
             Image("card table")
                 .resizable()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             VStack {
+                HStack{
+                    Text("Current winstreak: \(WinStreak)")
+                        .font(Font.system(size: 10, weight: .heavy, design: .monospaced))
+                        .frame(width: 100, height: 30)
+                        .background(.red)
+                    Text("Highest winstreak: \(highestWinStreak)")
+                        .font(Font.system(size: 10, weight: .heavy, design: .monospaced))
+                        .frame(width: 100, height: 30)
+                        .background(.gray)
+                    Text("Total wins: \(TotalWins)")
+                        .font(Font.system(size: 10, weight: .heavy, design: .monospaced))
+                        .frame(width: 100, height: 30)
+                        .background(.green)
+                    
+                }
                 HStack {
                     VStack {
-                        
+                       
                         ZStack {
                             Image("deckOfCards")
                                 .resizable()
@@ -106,8 +124,13 @@ struct WarView: View {
                     }
                     if number > Dnumber {
                         PlayersCards += 2
+                        WinStreak += 1
+                       
+                        
+                        
                     } else if Dnumber > number {
                         ComputerCards += 2
+                        WinStreak = 0
                     } else if number == Dnumber {
                         PlayersCards += 1
                         ComputerCards += 1
@@ -116,6 +139,10 @@ struct WarView: View {
                         EndText = "You Lose!"
                     } else if ComputerCards == 0 {
                         EndText = "You Win!"
+                        TotalWins += 1
+                    }
+                    if WinStreak > highestWinStreak {
+                        highestWinStreak += WinStreak
                     }
                     
                     PlayersCards -= 1

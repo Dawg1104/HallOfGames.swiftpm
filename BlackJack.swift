@@ -86,9 +86,14 @@ struct BlackJack: View {
                         playerScore += 1
                     }
                     if playerScore > 21 {
-                        playerScore = 0
-                        endGameDisplay = "BUST"
+                       endGameDisplay = "BUST"
                         WinStreak = 0
+                        
+                        computerScore = 0
+                        playerScore = 0
+                         cardImage = ""
+                        endGameDisplay = ""
+                        Opacity = false
                         
                        
             }
